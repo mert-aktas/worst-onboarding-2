@@ -1,0 +1,113 @@
+/* ═══════════════════════════════════════════════════════
+   WORST ONBOARDING EVER 2 — Level Styles
+   The wrapper is beautiful. The levels are terrible. That's the joke.
+   Uses the game.css design tokens (--game-*, fonts).
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Shared toast (reused by every level) ─────────────── */
+.woe-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  z-index: 100000;
+  background: var(--game-surface);
+  color: var(--game-text);
+  border: 1px solid var(--game-border);
+  border-radius: 10px;
+  padding: 0.7rem 1.1rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  max-width: 90vw;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.woe-toast-out { opacity: 0; transform: translateX(-50%) translateY(10px); }
+
+/* transition-screen credit line (Denis / Tomasz etc.) */
+#transition-level-credit {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--game-text-dim);
+  opacity: 0.7;
+}
+
+/* ═══ LEVEL 1: The Banner Avalanche ═══ */
+.l1-app { min-height: 100%; background: var(--game-bg); }
+.l1-appbar {
+  display: flex; align-items: center; gap: 2rem;
+  padding: 1rem 1.5rem;
+  background: var(--game-surface);
+  border-bottom: 1px solid var(--game-border);
+}
+.l1-logo { font-family: var(--font-display); font-size: 1.3rem; color: var(--game-text); }
+.l1-appnav { display: flex; gap: 1.25rem; }
+.l1-appnav a { color: var(--game-text-dim); font-size: 0.9rem; cursor: pointer; }
+.l1-appbody { padding: 2.5rem 1.5rem; }
+.l1-appbody h2 { font-family: var(--font-display); font-size: 2rem; color: var(--game-text); margin-bottom: 0.5rem; }
+.l1-appbody p { color: var(--game-text-dim); max-width: 460px; }
+
+.l1-banners {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; flex-direction: column;
+  z-index: 500;
+}
+.l1-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.8rem 1.1rem;
+  background: linear-gradient(90deg, #2b2140, #23283f);
+  border-bottom: 1px solid var(--game-border);
+  color: var(--game-text);
+  font-size: 0.9rem;
+  transition: transform 0.3s ease, opacity 0.25s ease;
+}
+.l1-banner-in { animation: l1SlideIn 0.35s ease; }
+@keyframes l1SlideIn { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.l1-banner-out { opacity: 0; transform: translateY(-8px); }
+.l1-banner-text { flex: 1; }
+.l1-banner-close {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border: none; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08); color: var(--game-text);
+  font-size: 1.15rem; line-height: 1; cursor: pointer;
+}
+.l1-banner-close:hover { background: rgba(255, 255, 255, 0.18); }
+.l1-banner-special { background: var(--game-text); color: var(--game-bg); font-weight: 500; }
+.l1-banner-special a { color: #b3261e; text-decoration: underline; cursor: pointer; font-weight: 700; }
+
+.l1-prefs-panel {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: min(90vw, 360px);
+  padding: 1.5rem 1.75rem;
+  background: var(--game-surface); border: 1px solid var(--game-border);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.l1-prefs-panel h3 { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 1rem; color: var(--game-text); }
+.l1-toggle-row { display: flex; align-items: center; gap: 0.7rem; color: var(--game-text); font-size: 0.95rem; cursor: pointer; }
+.l1-toggle-row input { width: 18px; height: 18px; cursor: pointer; }
+
+.l1-complete-btn {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  z-index: 1000;
+  font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+  padding: 0.9rem 2rem;
+  background: var(--game-success); color: var(--game-bg);
+  border: none; border-radius: 8px; cursor: pointer;
+}
+.l1-dismiss-ghost {
+  position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+  z-index: 1000; opacity: 0.35;
+  color: var(--game-text-dim); font-size: 0.8rem;
+  text-decoration: underline; cursor: pointer;
+}
+.l1-dismiss-ghost:hover { opacity: 0.7; }
+
+@media (max-width: 640px) {
+  .l1-appnav { display: none; }
+  .l1-banner { font-size: 0.82rem; padding: 0.7rem 0.9rem; }
+  .l1-appbody { padding: 1.5rem 1rem; }
+}

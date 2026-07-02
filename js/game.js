@@ -100,6 +100,7 @@ const Game = {
     document.getElementById('transition-level-num').textContent = `Level ${levelNum}`;
     document.getElementById('transition-level-name').textContent = info.name;
     document.getElementById('transition-level-desc').textContent = info.tagline;
+    document.getElementById('transition-level-credit').textContent = info.credit || '';
 
     // Hide all levels
     document.querySelectorAll('.level-container').forEach(el => {
