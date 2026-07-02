@@ -475,4 +475,115 @@ const Levels = {
       renderScore(QUESTION); show();
     });
   },
+
+  // ════════════════════════════════════════════════════════
+  // LEVEL 5: The Copilot From Hell (finale)
+  // A fake cursor "helpfully" spawns callbacks to L1-L4 (banner, PiP video,
+  // checklist, NPS), each dismissible in one click (cap 4). Astra answers every
+  // message with a canned non-answer. After 2 dismissals, quick-reply chips
+  // appear; "Just let me use the app" (or a message with "myself"/"let me") makes
+  // Astra sulk and reveal "Disable copilot". Escape: 60s or 12 rage clicks.
+  // ════════════════════════════════════════════════════════
+  level5(container) {
+    container.innerHTML = `
+      <div class="l5-dash">
+        <header class="l5-appbar"><span class="l5-logo">ProductApp Two</span><span class="l5-dash-sub">Dashboard</span></header>
+        <div class="l5-dash-body">
+          <div class="l5-card"><h4>Active Projects</h4><p>3</p></div>
+          <div class="l5-card"><h4>Tasks Done</h4><p>12</p></div>
+          <div class="l5-card"><h4>Team Members</h4><p>5</p></div>
+        </div>
+        <div class="l5-artifacts" id="l5-artifacts"></div>
+        <div class="l5-cursor" id="l5-cursor"><span class="l5-cursor-tag">Astra</span></div>
+        <div class="l5-chat" id="l5-chat">
+          <div class="l5-chat-head">
+            <span class="l5-chat-title">✨ Astra — your onboarding copilot</span>
+            <button class="l5-disable hidden" id="l5-disable" data-valid-click>Disable copilot</button>
+          </div>
+          <div class="l5-chat-log" id="l5-chat-log">
+            <div class="l5-msg l5-msg-bot">Hi, I am Astra. I will help you onboard, whether you want it or not.</div>
+          </div>
+          <div class="l5-chips hidden" id="l5-chips">
+            <button class="l5-chip" data-valid-click id="l5-chip-around">Show me around</button>
+            <button class="l5-chip" data-valid-click id="l5-chip-features">Enable more features</button>
+            <button class="l5-chip" data-valid-click id="l5-chip-stop">Just let me use the app</button>
+          </div>
+          <form class="l5-chat-input" id="l5-chat-form">
+            <input type="text" id="l5-chat-text" placeholder="Ask Astra anything..." data-valid-click autocomplete="off">
+            <button type="submit" class="l5-send" data-valid-click>Send</button>
+          </form>
+        </div>
+      </div>
+    `;
+
+    const ARTIFACTS = [
+      { cls: 'l5-art-banner', label: '🎉 We noticed you are using the product. Please hold.' },
+      { cls: 'l5-art-video', label: '▶ Video 2 of 12: "What Is A Cursor"' },
+      { cls: 'l5-art-checklist', label: '☑ Get set up in 3 quick steps! (again)' },
+      { cls: 'l5-art-modal', label: '★ Quick question! How is your onboarding going?' },
+    ];
+    const CANNED = [
+      'Great question! Here is an article about our Q3 roadmap.',
+      'I have scheduled a demo on your behalf. You are welcome.',
+      'It sounds like you are frustrated. Have you tried our webinar?',
+      'I did not understand that, but I went ahead and enabled notifications.',
+    ];
+    const artEl = container.querySelector('#l5-artifacts');
+    const cursor = container.querySelector('#l5-cursor');
+    const log = container.querySelector('#l5-chat-log');
+    let spawned = 0, dismissed = 0, cannedIdx = 0, chipsShown = false, disableShown = false, done = false;
+    const timers = [];
+
+    function addMsg(text, who) {
+      const m = document.createElement('div');
+      m.className = 'l5-msg ' + (who === 'user' ? 'l5-msg-user' : 'l5-msg-bot');
+      m.textContent = text;
+      log.appendChild(m); log.scrollTop = log.scrollHeight;
+    }
+    function spawnArtifact() {
+      if (spawned >= 4 || done) return;
+      const a = ARTIFACTS[spawned]; spawned++;
+      const el = document.createElement('div');
+      el.className = 'l5-artifact ' + a.cls;
+      el.style.left = (Math.random() * 40 + 8) + '%';
+      el.style.top = (Math.random() * 42 + 12) + '%';
+      el.innerHTML = '<span class="l5-art-text"></span><button class="l5-artifact-close" data-valid-click aria-label="Dismiss">×</button>';
+      el.querySelector('.l5-art-text').textContent = a.label;
+      artEl.appendChild(el);
+    }
+    function moveCursor() {
+      if (done) return;
+      cursor.style.left = (Math.random() * 78 + 8) + '%';
+      cursor.style.top = (Math.random() * 66 + 10) + '%';
+    }
+    function showChips() { if (chipsShown || done) return; chipsShown = true; container.querySelector('#l5-chips').classList.remove('hidden'); }
+    function showDisable() { if (disableShown || done) return; disableShown = true; container.querySelector('#l5-disable').classList.remove('hidden'); }
+    function sulk() { addMsg('Fine. Humans. 🙄 Disabling assistance mode.', 'bot'); showDisable(); }
+    function finish() { if (done) return; done = true; timers.forEach(t => { clearTimeout(t); clearInterval(t); }); Game.completeLevel(); }
+
+    artEl.addEventListener('click', (e) => {
+      if (!e.target.closest('.l5-artifact-close')) return;
+      const art = e.target.closest('.l5-artifact'); if (art) art.remove();
+      dismissed++;
+      if (dismissed >= 2) showChips();
+    });
+    container.querySelector('#l5-chip-around').addEventListener('click', () => { addMsg('Showing you around means showing you more things to close.', 'bot'); spawnArtifact(); });
+    container.querySelector('#l5-chip-features').addEventListener('click', () => { addMsg('Enabling features you did not ask for. You are welcome.', 'bot'); spawnArtifact(); });
+    container.querySelector('#l5-chip-stop').addEventListener('click', sulk);
+    container.querySelector('#l5-chat-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = container.querySelector('#l5-chat-text');
+      const val = input.value.trim(); if (!val) return;
+      addMsg(val, 'user'); input.value = '';
+      if (/myself|let me/i.test(val)) { sulk(); return; }
+      addMsg(CANNED[cannedIdx % CANNED.length], 'bot'); cannedIdx++;
+    });
+    container.querySelector('#l5-disable').addEventListener('click', finish);
+
+    moveCursor();
+    timers.push(setTimeout(() => { moveCursor(); spawnArtifact(); }, 1500));
+    timers.push(setInterval(() => { moveCursor(); spawnArtifact(); }, 4000));
+    timers.push(setTimeout(showDisable, 60000)); // escape hatch: 60s
+    timers.push(setInterval(() => { if (Game.levelRageClicks >= 12) showDisable(); }, 800)); // escape hatch: 12 rage clicks
+  },
 };
