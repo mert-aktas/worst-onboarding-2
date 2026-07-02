@@ -366,4 +366,113 @@ const Levels = {
 
     rebuild(); // initial 3 items
   },
+
+  // ════════════════════════════════════════════════════════
+  // LEVEL 4: The NPS Ambush
+  // A real form you want to use — hijacked on the first keystroke by an NPS modal
+  // (shuffling 0-10 buttons, a 140-char "why" with a backwards counter and blocked
+  // paste). Dismiss it and it returns every 5s with escalating guilt. The 3rd
+  // return (and the Survey 2 of 7 state) offer "remind me never" -> the form works.
+  // ════════════════════════════════════════════════════════
+  level4(container) {
+    container.innerHTML = `
+      <div class="l4-app">
+        <header class="l4-appbar"><span class="l4-logo">ProductApp Two</span></header>
+        <div class="l4-form-area">
+          <h2>Name your first project</h2>
+          <p class="l4-form-sub">You are finally in. Let us build something.</p>
+          <input type="text" id="l4-project-name" class="l4-input" placeholder="e.g. Q3 Launch" data-valid-click autocomplete="off">
+          <button class="l4-create-btn" id="l4-create" data-valid-click>Create</button>
+        </div>
+        <div class="l4-modal-overlay hidden" id="l4-overlay">
+          <div class="l4-modal">
+            <button class="l4-modal-close" data-valid-click aria-label="Close">×</button>
+            <div class="l4-modal-body" id="l4-modal-body"></div>
+            <a class="l4-never hidden" id="l4-never" data-valid-click>remind me never</a>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
+    const ESCALATION = [
+      'We noticed you did not finish sharing your feelings 😢',
+      'Your feedback literally keeps our servers running.',
+      'This is the last time we will ask. (It is not.)',
+    ];
+    const QUESTION = 'Quick question! How likely are you to recommend ProductApp Two to a friend or colleague?';
+    const overlay = container.querySelector('#l4-overlay');
+    const body = container.querySelector('#l4-modal-body');
+    const neverLink = container.querySelector('#l4-never');
+    let ambushTriggered = false, dismissCount = 0, modalDead = false, done = false;
+    const timers = [];
+
+    const show = () => overlay.classList.remove('hidden');
+    const hide = () => overlay.classList.add('hidden');
+    const revealNever = () => neverLink.classList.remove('hidden');
+
+    function shuffleNps(nps) { [...nps.children].sort(() => Math.random() - 0.5).forEach(c => nps.appendChild(c)); }
+    function renderScore(header) {
+      body.innerHTML = '<h3 class="l4-modal-title"></h3><div class="l4-nps" id="l4-nps"></div>';
+      body.querySelector('.l4-modal-title').textContent = header;
+      const nps = body.querySelector('#l4-nps');
+      for (let n = 0; n <= 10; n++) {
+        const b = document.createElement('button');
+        b.className = 'l4-nps-btn'; b.setAttribute('data-valid-click', ''); b.textContent = n;
+        b.addEventListener('mouseenter', () => { if (!isMobile) shuffleNps(nps); });
+        b.addEventListener('click', renderWhy);
+        nps.appendChild(b);
+      }
+    }
+    function renderWhy() {
+      body.innerHTML = `
+        <h3 class="l4-modal-title">Tell us why (required, minimum 140 characters)</h3>
+        <textarea class="l4-why" id="l4-why" placeholder="Be honest. Be thorough. Be trapped."></textarea>
+        <div class="l4-why-foot"><span class="l4-counter" id="l4-counter">140</span>
+          <button class="l4-why-submit" id="l4-why-submit" data-valid-click disabled>Submit</button></div>
+      `;
+      const ta = body.querySelector('#l4-why');
+      const counter = body.querySelector('#l4-counter');
+      const submit = body.querySelector('#l4-why-submit');
+      ta.addEventListener('paste', (e) => { e.preventDefault(); Levels.woeToast('No copy-pasting your feelings.'); });
+      ta.addEventListener('input', () => {
+        counter.textContent = Math.max(0, 140 - ta.value.length); // starts at 140, counts down
+        submit.disabled = ta.value.length < 140;
+      });
+      submit.addEventListener('click', () => { if (ta.value.length >= 140) renderSurvey2(); });
+    }
+    function renderSurvey2() {
+      body.innerHTML = '<h3 class="l4-modal-title">Thank you! Survey 2 of 7 will begin shortly.</h3>' +
+        '<div class="l4-loading"><span class="l2-spinner"></span> Loading survey 2 of 7...</div>';
+      revealNever(); // even compliance offers the out
+    }
+    function returnModal() {
+      if (modalDead || done) return;
+      renderScore(ESCALATION[Math.min(dismissCount - 1, ESCALATION.length - 1)]);
+      if (dismissCount >= 3) revealNever();
+      show();
+    }
+    function finish() {
+      if (done) return;
+      done = true;
+      timers.forEach(t => clearTimeout(t));
+      Game.completeLevel();
+    }
+
+    container.querySelector('#l4-project-name').addEventListener('input', () => {
+      if (ambushTriggered || modalDead) return;
+      ambushTriggered = true; renderScore(QUESTION); show();
+    });
+    container.querySelector('.l4-modal-close').addEventListener('click', () => {
+      hide(); dismissCount++; timers.push(setTimeout(returnModal, 5000));
+    });
+    neverLink.addEventListener('click', () => {
+      modalDead = true; hide(); timers.forEach(t => clearTimeout(t));
+    });
+    container.querySelector('#l4-create').addEventListener('click', () => {
+      if (modalDead) { finish(); return; }
+      if (!ambushTriggered) ambushTriggered = true;
+      renderScore(QUESTION); show();
+    });
+  },
 };
