@@ -19,8 +19,8 @@ const Game = {
     document.getElementById('start-btn').addEventListener('click', () => this.start());
     document.getElementById('play-again-btn').addEventListener('click', () => this.restart());
     document.getElementById('share-btn').addEventListener('click', () => this.share());
-    const woe2Btn = document.getElementById('woe2-btn');
-    if (woe2Btn) woe2Btn.addEventListener('click', () => track('woe2_click'));
+    const woe1Btn = document.getElementById('woe1-btn');
+    if (woe1Btn) woe1Btn.addEventListener('click', () => track('woe1_click'));
 
     // Global rage click tracker
     document.addEventListener('click', (e) => {
@@ -135,12 +135,93 @@ const Game = {
     }
   },
 
-  // ── End Game ──────────────────────────────────────────
+  // ── End Game → Payoff → Results ───────────────────────
   endGame() {
     this.stopTimer();
     this.state = 'end';
+    document.getElementById('hud').classList.add('hidden');
+    document.querySelectorAll('.level-container').forEach(el => el.classList.add('hidden'));
 
-    // Load the HubSpot meetings embed once the end screen is actually reached
+    // Patience score (0-100). Timer is already stopped, so the payoff sequence
+    // that follows does not affect the score.
+    const timeScore = Math.max(0, 100 - (this.timer / 3));
+    const patienceScore = Math.max(0, Math.round(timeScore - this.rageClicks * 0.5));
+    this._final = {
+      time: this.formatTime(this.timer), clicks: this.rageClicks,
+      patience: patienceScore, label: this.getPatienceLabel(patienceScore)
+    };
+    track('game_complete', { total_seconds: this.timer, rage_clicks: this.rageClicks, patience_score: patienceScore });
+    if (window.LB) LB.onGameEnd({ seconds: this.timer, rage: this.rageClicks, patience: patienceScore });
+
+    window.scrollTo(0, 0);
+    this.showPayoff();
+  },
+
+  // The payoff: ~10s of what GOOD onboarding feels like. The contrast is the
+  // pitch. The quiet Skip link actually works — that is the meta-joke.
+  showPayoff() {
+    const screen = document.getElementById('payoff-screen');
+    screen.innerHTML = `
+      <a class="payoff-skip" id="payoff-skip" data-valid-click>Skip</a>
+      <div class="payoff-stage">
+        <div class="payoff-tooltip" id="payoff-tooltip">Create your first project. Two steps, that is all.</div>
+        <div class="payoff-field" id="payoff-field">
+          <input class="payoff-input" id="payoff-input" placeholder="Project name" readonly>
+          <button class="payoff-create" id="payoff-create">Create</button>
+        </div>
+        <div class="payoff-success hidden" id="payoff-success">
+          <div class="payoff-check">✓</div>
+          <ul class="payoff-checklist"><li id="payoff-c1"></li><li id="payoff-c2"></li></ul>
+          <p class="payoff-checklabel" id="payoff-checklabel">Setup complete, 0 of 2</p>
+        </div>
+        <div class="payoff-headline hidden" id="payoff-headline">
+          <h2>That is it. That is what onboarding is supposed to feel like.</h2>
+          <button class="payoff-continue" id="payoff-continue" data-valid-click>Show my results →</button>
+        </div>
+      </div>
+    `;
+    screen.classList.remove('hidden');
+    track('payoff_view');
+
+    const beats = [];
+    let finished = false;
+    const toResults = (skipped) => {
+      if (finished) return;
+      finished = true;
+      if (skipped) track('payoff_skip');
+      beats.forEach(clearTimeout);
+      screen.classList.add('hidden');
+      this.showResults();
+    };
+    document.getElementById('payoff-skip').addEventListener('click', () => toResults(true));
+    document.getElementById('payoff-continue').addEventListener('click', () => toResults(false));
+
+    const input = document.getElementById('payoff-input');
+    const createBtn = document.getElementById('payoff-create');
+    createBtn.addEventListener('click', () => {
+      document.getElementById('payoff-tooltip').classList.add('hidden');
+      document.getElementById('payoff-field').classList.add('hidden');
+      document.getElementById('payoff-success').classList.remove('hidden');
+      beats.push(setTimeout(() => { document.getElementById('payoff-c1').textContent = '✓ Project created'; document.getElementById('payoff-checklabel').textContent = 'Setup complete, 1 of 2'; }, 500));
+      beats.push(setTimeout(() => { document.getElementById('payoff-c2').textContent = '✓ You are ready to go'; document.getElementById('payoff-checklabel').textContent = 'Setup complete, 2 of 2'; }, 1200));
+      beats.push(setTimeout(() => { document.getElementById('payoff-headline').classList.remove('hidden'); }, 3000));
+    });
+
+    // Beat 2 (~2s): the input types itself, then Create pulses and auto-clicks.
+    beats.push(setTimeout(() => {
+      const text = 'My first project';
+      let i = 0;
+      const type = () => {
+        if (finished) return;
+        if (i <= text.length) { input.value = text.slice(0, i); i++; beats.push(setTimeout(type, 55)); }
+        else { createBtn.classList.add('payoff-pulse'); beats.push(setTimeout(() => { if (!finished) createBtn.click(); }, 650)); }
+      };
+      type();
+    }, 2000));
+  },
+
+  showResults() {
+    // Load the HubSpot meetings embed once results are actually reached.
     if (!this._meetingsEmbedLoaded) {
       this._meetingsEmbedLoaded = true;
       const s = document.createElement('script');
@@ -154,30 +235,15 @@ const Game = {
     }
     window.scrollTo(0, 0);
 
-    document.getElementById('hud').classList.add('hidden');
-    document.querySelectorAll('.level-container').forEach(el => el.classList.add('hidden'));
+    const f = this._final;
+    document.getElementById('end-time').textContent = f.time;
+    document.getElementById('end-clicks').textContent = f.clicks;
+    document.getElementById('end-patience').textContent = f.patience + '/100';
+    document.getElementById('end-patience-label').textContent = f.label;
 
-    // Calculate patience score (0-100, higher = more patient)
-    const timeScore = Math.max(0, 100 - (this.timer / 3));
-    const clickPenalty = this.rageClicks * 0.5;
-    const patienceScore = Math.max(0, Math.round(timeScore - clickPenalty));
-    track('game_complete', {
-      total_seconds: this.timer,
-      rage_clicks: this.rageClicks,
-      patience_score: patienceScore
-    });
-    if (window.LB) LB.onGameEnd({ seconds: this.timer, rage: this.rageClicks, patience: patienceScore });
+    this.saveBestScore(this.timer, this.rageClicks, f.patience);
 
-    document.getElementById('end-time').textContent = this.formatTime(this.timer);
-    document.getElementById('end-clicks').textContent = this.rageClicks;
-    document.getElementById('end-patience').textContent = patienceScore + '/100';
-    document.getElementById('end-patience-label').textContent = this.getPatienceLabel(patienceScore);
-
-    this.saveBestScore(this.timer, this.rageClicks, patienceScore);
-
-    const end = document.getElementById('end-screen');
-    end.classList.remove('hidden');
-
+    document.getElementById('end-screen').classList.remove('hidden');
     this.launchConfetti();
   },
 
@@ -196,7 +262,7 @@ const Game = {
     const label = this.getPatienceLabel(patienceScore);
     const time = this.formatTime(this.timer);
     const clicks = this.rageClicks;
-    const text = `I just survived the Worst Onboarding Ever.\n\n⏱ ${time} minutes | 💀 ${clicks} rage clicks | Patience: "${label}"\n\nCan you beat me? Try here: https://games.userguiding.com/worst-onboarding/\n\n#WorstOnboardingEver`;
+    const text = `I survived Worst Onboarding Ever 2.\n\n⏱ ${time} | 💀 ${clicks} rage clicks | Patience: "${label}"\n\nThe community designed these levels. Blame them. Try it: https://games.userguiding.com/worst-onboarding-2/\n\n#WorstOnboardingEver`;
 
     const blob = await this.renderShareBlob(time, clicks, patienceScore, label);
 
@@ -252,12 +318,12 @@ const Game = {
     ctx.fillStyle = '#e8e6e3';
     ctx.font = '700 72px Georgia, serif';
     ctx.textAlign = 'center';
-    ctx.fillText('You Survived.', 600, 160);
+    ctx.fillText('You Survived. Again.', 600, 160);
 
     // Subtitle
     ctx.fillStyle = '#6b6976';
     ctx.font = '400 22px system-ui, sans-serif';
-    ctx.fillText('Against all odds, you made it through the worst onboarding ever created.', 600, 210);
+    ctx.fillText('You made it through five community-designed levels of the worst onboarding ever.', 600, 210);
 
     // Stats
     const stats = [
@@ -301,9 +367,9 @@ const Game = {
 
   // ── LocalStorage ──────────────────────────────────────
   saveBestScore(time, clicks, patience) {
-    const prev = JSON.parse(localStorage.getItem('woe-best') || 'null');
+    const prev = JSON.parse(localStorage.getItem('woe2-best') || 'null');
     if (!prev || time < prev.time) {
-      localStorage.setItem('woe-best', JSON.stringify({ time, clicks, patience }));
+      localStorage.setItem('woe2-best', JSON.stringify({ time, clicks, patience }));
       document.getElementById('end-best').textContent = `New personal best!`;
     } else {
       document.getElementById('end-best').textContent = `Best: ${this.formatTime(prev.time)}`;
@@ -311,7 +377,7 @@ const Game = {
   },
 
   loadBestScore() {
-    const prev = JSON.parse(localStorage.getItem('woe-best') || 'null');
+    const prev = JSON.parse(localStorage.getItem('woe2-best') || 'null');
     if (prev) {
       const el = document.getElementById('title-best');
       if (el) el.textContent = `Personal best: ${this.formatTime(prev.time)}`;
