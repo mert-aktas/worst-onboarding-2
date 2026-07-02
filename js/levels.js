@@ -156,4 +156,101 @@ const Levels = {
     timers.push(setTimeout(showEscape, 45000));
     timers.push(setInterval(() => { if (Game.levelRageClicks >= 8) showEscape(); }, 600));
   },
+
+  // ════════════════════════════════════════════════════════
+  // LEVEL 2: The Unskippable Academy (credit: Denis Acia)
+  // Forced autoplay "video": cycling captions, a progress bar that rewinds once
+  // and stalls at 88% forever, controls that flee the cursor, a Skip button that
+  // ADDS time. Exit after 3 skips (or 10s stalled): Mark as watched -> title card.
+  // ════════════════════════════════════════════════════════
+  level2(container) {
+    container.innerHTML = `
+      <div class="l2-player">
+        <div class="l2-screen">
+          <div class="l2-badge">Mandatory Onboarding Academy</div>
+          <div class="l2-video-title">Video 1 of 12: "What Is A Button"</div>
+          <div class="l2-caption" id="l2-caption">Welcome to ProductApp Two.</div>
+          <div class="l2-buffer hidden" id="l2-buffer"><span class="l2-spinner"></span> Buffering...</div>
+        </div>
+        <div class="l2-controls">
+          <div class="l2-ctrl-left" id="l2-ctrl-left">
+            <button class="l2-ctrl" id="l2-mute" data-valid-click aria-label="Mute">🔇</button>
+            <button class="l2-ctrl" id="l2-pause" data-valid-click aria-label="Pause">❚❚</button>
+          </div>
+          <div class="l2-progress"><div class="l2-progress-fill" id="l2-progress-fill"></div></div>
+          <button class="l2-skip" id="l2-skip" data-valid-click>Skip intro</button>
+        </div>
+        <a class="l2-watch-later hidden" id="l2-watch-later" data-valid-click>Having trouble? Mark as watched</a>
+      </div>
+    `;
+
+    const CAPTIONS = [
+      'Welcome to ProductApp Two.',
+      'This video cannot be paused. This is for your own good.',
+      'A button is a thing you click.',
+      'Please do not attempt to use the product yet.',
+      'Muting is disabled during mandatory training.',
+      'Almost there. Definitely almost there.',
+    ];
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
+    const captionEl = container.querySelector('#l2-caption');
+    const fill = container.querySelector('#l2-progress-fill');
+    let capIdx = 0, pct = 0, skips = 0, rewound = false, stalled = false, watchShown = false, done = false;
+    const timers = [];
+
+    function showWatchLater() {
+      if (watchShown || done) return;
+      watchShown = true;
+      container.querySelector('#l2-watch-later').classList.remove('hidden');
+    }
+    function stall() {
+      if (stalled) return;
+      stalled = true;
+      container.querySelector('#l2-buffer').classList.remove('hidden');
+      timers.push(setTimeout(showWatchLater, 10000)); // 10s stalled -> mercy exit
+    }
+    function finish() {
+      if (done) return;
+      done = true;
+      timers.forEach(t => { clearTimeout(t); clearInterval(t); });
+      Game.completeLevel();
+    }
+
+    timers.push(setInterval(() => {
+      capIdx = (capIdx + 1) % CAPTIONS.length;
+      captionEl.textContent = CAPTIONS[capIdx];
+    }, 3000));
+
+    timers.push(setInterval(() => {
+      if (stalled || done) return;
+      pct += 4;
+      if (!rewound && pct >= 40) { rewound = true; pct -= 5; Levels.woeToast('Buffering... re-watching required section'); }
+      if (pct >= 88) { pct = 88; stall(); }
+      fill.style.width = pct + '%';
+    }, 1000));
+
+    const swap = () => { if (isMobile) return; const l = container.querySelector('#l2-ctrl-left'); l.appendChild(l.firstElementChild); };
+    container.querySelector('#l2-mute').addEventListener('mouseenter', swap);
+    container.querySelector('#l2-pause').addEventListener('mouseenter', swap);
+    container.querySelector('#l2-mute').addEventListener('click', () => Levels.woeToast('Muting is disabled during mandatory training'));
+    container.querySelector('#l2-pause').addEventListener('click', () => Levels.woeToast('Pausing is a premium feature'));
+
+    container.querySelector('#l2-skip').addEventListener('click', () => {
+      skips++;
+      container.querySelector('#l2-skip').textContent = `Skip intro (+${skips * 10}s added)`;
+      Levels.woeToast('Skipping detected. Penalty applied.');
+      if (skips >= 3) showWatchLater();
+    });
+
+    container.querySelector('#l2-watch-later').addEventListener('click', () => {
+      container.querySelector('.l2-player').innerHTML = `
+        <div class="l2-done">
+          <div class="l2-done-emoji">🎓</div>
+          <h2>Video marked as watched. You learned nothing.</h2>
+          <button class="l2-complete-btn" id="l2-complete" data-valid-click>Continue →</button>
+        </div>
+      `;
+      container.querySelector('#l2-complete').addEventListener('click', finish);
+    });
+  },
 };
