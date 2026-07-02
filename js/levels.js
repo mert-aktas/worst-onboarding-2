@@ -253,4 +253,117 @@ const Levels = {
       container.querySelector('#l2-complete').addEventListener('click', finish);
     });
   },
+
+  // ════════════════════════════════════════════════════════
+  // LEVEL 3: The Checklist of Doom (credit: Tomasz Drybala)
+  // Checking an item adds two more (cap 9); the denominator never resolves.
+  // A 20s "Session" ring wipes all progress on idle (max 2 resets, then it gives
+  // up and a skip link appears). Exit via the ... menu or that skip link. 20s is
+  // deliberate: an ACTIVE player never triggers it — it only punishes hesitating.
+  // ════════════════════════════════════════════════════════
+  level3(container) {
+    container.innerHTML = `
+      <div class="l3-screen">
+        <header class="l3-appbar"><span class="l3-logo">ProductApp Two</span></header>
+        <div class="l3-widget">
+          <div class="l3-widget-head">
+            <div class="l3-widget-title">
+              <h3>Get set up in 3 quick steps!</h3>
+              <p class="l3-progress" id="l3-progress">0 of 3</p>
+            </div>
+            <div class="l3-head-right">
+              <div class="l3-ring-wrap" id="l3-ring-wrap" title="Session timeout">
+                <span class="l3-ring-label">Session</span>
+                <span class="l3-ring" id="l3-ring">20</span>
+              </div>
+              <button class="l3-menu-btn" id="l3-menu" data-valid-click aria-label="More options">⋯</button>
+              <div class="l3-menu-pop hidden" id="l3-menu-pop">
+                <button id="l3-dismiss" data-valid-click>Dismiss checklist forever</button>
+              </div>
+            </div>
+          </div>
+          <ul class="l3-list" id="l3-list"></ul>
+        </div>
+        <a class="l3-skip-setup hidden" id="l3-skip-setup" data-valid-click>Skip setup (I know what I am doing)</a>
+      </div>
+    `;
+
+    const INITIAL = ['Create your first project', 'Explore the dashboard', 'Say hi to ProductBot'];
+    const POOL = ['Invite your team (minimum 25 seats)', 'Configure SSO', 'Schedule kickoff with your CSM',
+      'Watch the onboarding video again', 'Add a payment method (just in case)', 'Complete your compliance training'];
+    const listEl = container.querySelector('#l3-list');
+    const ringEl = container.querySelector('#l3-ring');
+    let poolIdx = 0, checked = 0, sessionTime = 20, resetCount = 0, ringActive = true, done = false;
+    const timers = [];
+
+    function updateProgress() {
+      const den = checked <= 3 ? 3 : checked - 1; // "4 of 3", "6 of 5" — never resolves
+      container.querySelector('#l3-progress').textContent = `${checked} of ${den}`;
+    }
+    function addItemEl(text, isNew) {
+      const li = document.createElement('li');
+      li.className = 'l3-check-item' + (isNew ? ' l3-item-in' : '');
+      li.setAttribute('data-valid-click', '');
+      li.innerHTML = '<span class="l3-check-box"></span><span class="l3-check-label"></span>';
+      li.querySelector('.l3-check-label').textContent = text;
+      listEl.appendChild(li);
+    }
+    function rebuild() {
+      listEl.innerHTML = '';
+      INITIAL.forEach(t => addItemEl(t, false));
+      poolIdx = 0; checked = 0; updateProgress();
+    }
+
+    const resetSession = () => { if (ringActive && !done) sessionTime = 20; };
+    function doReset() {
+      resetCount++;
+      Levels.woeToast('👋 Welcome back! Looks like you stepped away, so we reset your progress. You are welcome.');
+      try { track('l3_idle_reset', { reset_count: resetCount }); } catch (e) {}
+      rebuild();
+      sessionTime = 20;
+      if (resetCount === 1) {
+        const m = container.querySelector('#l3-menu');
+        m.classList.add('l3-pulse');
+        setTimeout(() => m.classList.remove('l3-pulse'), 2000);
+      }
+      if (resetCount >= 2) { // mercy cap: stop the ring, reveal the skip link
+        ringActive = false;
+        container.querySelector('#l3-ring-wrap').classList.add('hidden');
+        container.querySelector('#l3-skip-setup').classList.remove('hidden');
+      }
+    }
+    function finish() {
+      if (done) return;
+      done = true;
+      document.removeEventListener('pointerdown', resetSession);
+      document.removeEventListener('keydown', resetSession);
+      timers.forEach(t => clearInterval(t));
+      Game.completeLevel();
+    }
+
+    listEl.addEventListener('click', (e) => {
+      const li = e.target.closest('.l3-check-item');
+      if (!li || li.classList.contains('l3-checked')) return;
+      li.classList.add('l3-checked');
+      li.querySelector('.l3-check-box').textContent = '✓';
+      checked++; updateProgress();
+      for (let k = 0; k < 2 && listEl.children.length < 9 && poolIdx < POOL.length; k++) addItemEl(POOL[poolIdx++], true);
+    });
+    container.querySelector('#l3-menu').addEventListener('click', () => {
+      container.querySelector('#l3-menu-pop').classList.toggle('hidden');
+    });
+    container.querySelector('#l3-dismiss').addEventListener('click', finish);
+    container.querySelector('#l3-skip-setup').addEventListener('click', finish);
+
+    document.addEventListener('pointerdown', resetSession);
+    document.addEventListener('keydown', resetSession);
+    timers.push(setInterval(() => {
+      if (!ringActive || done) return;
+      sessionTime--;
+      ringEl.textContent = Math.max(0, sessionTime);
+      if (sessionTime <= 0) doReset();
+    }, 1000));
+
+    rebuild(); // initial 3 items
+  },
 };
