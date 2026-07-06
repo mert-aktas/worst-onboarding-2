@@ -653,21 +653,10 @@ body {
 .end-divider { width: 56px; height: 1px; background: var(--game-border); margin: 2.4rem 0; }
 
 #end-screen .end-grid .end-actions { margin-top: 0; gap: 1.4rem; align-items: center; justify-content: flex-start; }
-.end-grid .end-cta { margin-top: 2.2rem; }
 
-/* Sequel promo link sits inline in the actions row as a red-tinted ghost */
-.end-grid .end-woe2-link { flex-basis: auto; margin-top: 0; border-color: rgba(255, 77, 77, 0.5); }
-.end-grid .end-woe2-link:hover { border-color: var(--game-accent); box-shadow: 0 0 24px var(--game-accent-glow); }
-
-/* Cross-game back-link: quiet underlined text */
-.end-text-link {
-  font-size: 0.88rem;
-  color: var(--game-text-dim);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  padding: 0.8rem 0;
-}
-.end-text-link:hover { color: var(--game-text); }
+/* Cross-game link: identical neutral ghost to Play Again (Mert, 2026-07-06) */
+.end-grid .end-woe2-link { flex-basis: auto; margin-top: 0; }
+.end-grid .end-woe2-link:hover { border-color: var(--game-text-dim); }
 
 /* RIGHT column card */
 .end-card {
