@@ -117,11 +117,36 @@
       <a class="end-cta-link" href="https://userguiding.com?utm_source=worst-onboarding-game-tr&utm_medium=referral&utm_campaign=woe2" target="_blank" rel="noopener">Onboarding'ini düzelt →</a>
     </div>
 
-    <div id="meeting-section">
-      <h2 class="meeting-heading">Seninle kavga etmeyen bir onboarding'e ne dersin?</h2>
-      <p class="meeting-subtext">UserGuiding'den Levent'le 30 dakikalık bir görüşme ayarla. Sürpriz modal yok, garanti.</p>
-      <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan?embed=true"></div>
-      <p class="meeting-fallback" id="meeting-fallback" hidden>Takvim yüklenmezse, demo ayarlamak için <a href="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan" target="_blank" rel="noopener noreferrer">buraya tıkla</a>.</p>
+    <!-- ═══ July 9 Turkish Group Demo CTA (GetContrast embed — same widget as WOE1 TR) ═══ -->
+    <div id="capture-section">
+      <h2 class="meeting-heading">Peki iyi bir onboarding nasıl olur?</h2>
+      <p class="meeting-subtext">9 Temmuz'da canlı grup demomuzda UserGuiding'i sıfırdan birlikte kuruyoruz. Ücretsiz ve Türkçe. Aşağıdan kaydol:</p>
+      <div id="__contrast_registration_ea9b25ea-2bf7-421a-adec-35eabc640ec5" style="width: 100%; height: 620px;"></div>
+      <script type="text/javascript">
+        (() => {
+          const frameContainer = document.getElementById('__contrast_registration_ea9b25ea-2bf7-421a-adec-35eabc640ec5');
+          const iframeUrl = new URL('https://watch.getcontrast.io/widgets/register/userguiding-userguiding-i-sifirdan-kuruyoruz-canli-grup-demosu?primaryColor=%235378F5&locale=en&utm_source=woe2-tr');
+          const iframe = document.createElement('iframe');
+          iframe.src = iframeUrl.href;
+          iframe.setAttribute('style', 'width: 100%; height: 100%; border: 0;');
+          iframe.setAttribute('title', 'Contrast registration form');
+          if (window.location.search) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const utms = {
+              utm_medium: urlParams.get('utm_medium'),
+              utm_source: urlParams.get('utm_source'),
+              utm_campaign: urlParams.get('utm_campaign'),
+              utm_content: urlParams.get('utm_content'),
+              utm_term: urlParams.get('utm_term'),
+            };
+            Object.keys(utms).forEach((key) => {
+              if (utms[key]) { iframeUrl.searchParams.set(key, utms[key]); }
+            });
+            iframe.src = iframeUrl.href;
+          }
+          frameContainer.appendChild(iframe);
+        })();
+      </script>
     </div>
   </div>
 

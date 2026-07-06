@@ -220,18 +220,8 @@ const Game = {
   },
 
   showResults() {
-    // Load the HubSpot meetings embed once results are actually reached.
-    if (!this._meetingsEmbedLoaded) {
-      this._meetingsEmbedLoaded = true;
-      const s = document.createElement('script');
-      s.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
-      document.body.appendChild(s);
-      setTimeout(() => {
-        if (!document.querySelector('.meetings-iframe-container iframe')) {
-          document.getElementById('meeting-fallback').hidden = false;
-        }
-      }, 5000);
-    }
+    // TR CTA is the GetContrast webinar widget (inline iframe in index.html) —
+    // no HubSpot meetings embed to lazy-load here.
     window.scrollTo(0, 0);
 
     const f = this._final;

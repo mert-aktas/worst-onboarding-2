@@ -1,4 +1,14 @@
 /* WOE 2 — Turkish variant overrides.
-   TR reuses the EN root's #meeting-section (Levent embed) styling from ../css/game.css,
-   so no capture-form CSS is needed here. This file holds only TR-specific
-   text-length fixes if any surface during 390px QA. */
+   TR's end-screen CTA is the GetContrast July-9 webinar widget (#capture-section),
+   laid out like the root's #meeting-section. Plus TR-specific text-length fixes
+   if any surface during 390px QA. */
+
+#capture-section {
+  margin-top: 3rem;
+  width: 100%;
+  max-width: 720px;
+}
+
+@media (max-width: 640px) {
+  #capture-section { margin-top: 2rem; }
+}
