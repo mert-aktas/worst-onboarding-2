@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dünyanın En Kötü Onboarding'i 2</title>
+  <meta name="description" content="Kimsenin istemediği, herkesin hak ettiği devam oyunu. Topluluğun tasarladığı beş yeni onboarding faciası.">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="Dünyanın En Kötü Onboarding'i 2">
+  <meta property="og:description" content="Kimsenin istemediği, herkesin hak ettiği devam oyunu. Topluluğun tasarladığı beş yeni onboarding faciası.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://games.userguiding.com/worst-onboarding-2/tr/">
+  <link rel="canonical" href="https://games.userguiding.com/worst-onboarding-2/tr/">
+  <meta property="og:image" content="https://games.userguiding.com/worst-onboarding-2/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://games.userguiding.com/worst-onboarding-2/assets/og-image.png">
+
+  <!-- GA4 (UserGuiding property, game traffic filtered by hostname in reports) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EP331KDLPN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EP331KDLPN');
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/game.css">
+  <link rel="stylesheet" href="../css/levels.css">
+  <link rel="stylesheet" href="override.css">
+</head>
+<body>
+
+  <!-- ═══ Title Screen ═══ -->
+  <div id="title-screen">
+    <span class="title-badge">Bunu topluluk istedi</span>
+    <h1 class="title-heading">Dünyanın<br><em>En Kötü</em><br>Onboarding'i 2</h1>
+    <p class="title-tagline">Gerçek insanların önerdiği beş yeni onboarding faciası. Öneren onlar, çeken sen.</p>
+    <button id="start-btn">Onboarding'e Başla (Yine)</button>
+    <p class="title-best" id="title-best"></p>
+    <div class="title-footer">
+      <a href="https://userguiding.com?utm_source=worst-onboarding-game-tr&utm_medium=referral&utm_campaign=woe2" target="_blank" rel="noopener">UserGuiding tarafından yapıldı</a>
+    </div>
+  </div>
+
+  <!-- ═══ HUD ═══ -->
+  <div id="hud" class="hidden">
+    <div class="hud-item">
+      <span class="hud-label">Süre</span>
+      <span class="hud-value" id="hud-timer">0:00</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Seviye</span>
+      <span class="hud-value" id="hud-level">1 / 5</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Öfke Tıklamaları</span>
+      <span class="hud-value" id="hud-clicks">0</span>
+    </div>
+  </div>
+
+  <!-- ═══ Transition Screen ═══ -->
+  <div id="transition-screen" class="hidden">
+    <span id="transition-level-num">Seviye 1</span>
+    <h2 id="transition-level-name">Banner Çığı</h2>
+    <p id="transition-level-desc">Uygulamayı bir göreyim yeter.</p>
+    <p id="transition-level-credit"></p>
+  </div>
+
+  <!-- ═══ Level Containers ═══ -->
+  <div id="level-1" class="level-container hidden"></div>
+  <div id="level-2" class="level-container hidden"></div>
+  <div id="level-3" class="level-container hidden"></div>
+  <div id="level-4" class="level-container hidden"></div>
+  <div id="level-5" class="level-container hidden"></div>
+
+  <!-- ═══ Payoff Screen ═══ -->
+  <div id="payoff-screen" class="hidden"></div>
+
+  <!-- ═══ End Screen ═══ -->
+  <div id="end-screen" class="hidden">
+    <div id="confetti-container"></div>
+    <h1 class="end-title">Hayatta Kaldın. Yine.</h1>
+    <p class="end-subtitle">Topluluğun tasarladığı beş seviye ve sen hâlâ buradasın. Saygı duyduk.</p>
+
+    <div class="end-stats">
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-time">0:00</span>
+        <span class="end-stat-label">Süre</span>
+      </div>
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-clicks">0</span>
+        <span class="end-stat-label">Öfke Tıklamaları</span>
+      </div>
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-patience">0</span>
+        <span class="end-stat-label">Sabır Puanı</span>
+      </div>
+    </div>
+
+    <p class="end-patience-label" id="end-patience-label">Sezercik kadar masum</p>
+    <p class="end-best" id="end-best"></p>
+
+    <div class="end-actions">
+      <button id="play-again-btn">Tekrar Oyna</button>
+      <a id="woe1-btn" class="end-woe2-link" href="https://games.userguiding.com/worst-onboarding/tr/" target="_blank" rel="noopener">İlk oyunu oyna: Dünyanın En Kötü Onboarding'i →</a>
+    </div>
+
+    <div class="end-cta-block">
+      <h2 class="end-cta-heading">İlk 5 seviye yerine son 10 saniyeyi mi tercih edersin?</h2>
+      <p class="end-cta-body">Sondaki o pürüzsüz kısım UserGuiding'in işi. Ondan önceki beş seviye ise kullanıcılarının şu anda yaşıyor olabileceği şey.</p>
+      <a class="end-cta-link" href="https://userguiding.com?utm_source=worst-onboarding-game-tr&utm_medium=referral&utm_campaign=woe2" target="_blank" rel="noopener">Onboarding'ini düzelt →</a>
+    </div>
+
+    <div id="meeting-section">
+      <h2 class="meeting-heading">Seninle kavga etmeyen bir onboarding'e ne dersin?</h2>
+      <p class="meeting-subtext">UserGuiding'den Levent'le 30 dakikalık bir görüşme ayarla. Sürpriz modal yok, garanti.</p>
+      <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan?embed=true"></div>
+      <p class="meeting-fallback" id="meeting-fallback" hidden>Takvim yüklenmezse, demo ayarlamak için <a href="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan" target="_blank" rel="noopener noreferrer">buraya tıkla</a>.</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/analytics.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/levels.js"></script>
+
+</body>
+</html>

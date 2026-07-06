@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O Pior Onboarding de Todos os Tempos 2</title>
+  <meta name="description" content="A continuação que ninguém pediu e todo mundo merecia. Cinco novos níveis de anti-padrões reais de onboarding, criados pela comunidade.">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="O Pior Onboarding de Todos os Tempos 2">
+  <meta property="og:description" content="A continuação que ninguém pediu e todo mundo merecia. Cinco novos níveis de anti-padrões reais de onboarding, criados pela comunidade.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://games.userguiding.com/worst-onboarding-2/pt-br/">
+  <link rel="canonical" href="https://games.userguiding.com/worst-onboarding-2/pt-br/">
+  <meta property="og:image" content="https://games.userguiding.com/worst-onboarding-2/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://games.userguiding.com/worst-onboarding-2/assets/og-image.png">
+
+  <!-- GA4 (UserGuiding property, game traffic filtered by hostname in reports) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EP331KDLPN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EP331KDLPN');
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/game.css">
+  <link rel="stylesheet" href="../css/levels.css">
+  <link rel="stylesheet" href="override.css">
+</head>
+<body>
+
+  <!-- ═══ Title Screen ═══ -->
+  <div id="title-screen">
+    <span class="title-badge">A comunidade pediu por isso</span>
+    <h1 class="title-heading">O Pior<br>Onboarding<br><em>de Todos os Tempos 2</em></h1>
+    <p class="title-tagline">Cinco novos níveis de anti-padrões reais de onboarding. Sugeridos por pessoas reais. Sofridos por você.</p>
+    <button id="start-btn">Começar o Onboarding (De Novo)</button>
+    <p class="title-best" id="title-best"></p>
+    <div class="title-footer">
+      <a href="https://userguiding.com/pt-br?utm_source=worst-onboarding-game-ptbr&utm_medium=referral&utm_campaign=woe2" target="_blank" rel="noopener">Feito pela UserGuiding</a>
+    </div>
+  </div>
+
+  <!-- ═══ HUD ═══ -->
+  <div id="hud" class="hidden">
+    <div class="hud-item">
+      <span class="hud-label">Tempo</span>
+      <span class="hud-value" id="hud-timer">0:00</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Nível</span>
+      <span class="hud-value" id="hud-level">1 / 5</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Cliques de Raiva</span>
+      <span class="hud-value" id="hud-clicks">0</span>
+    </div>
+  </div>
+
+  <!-- ═══ Transition Screen ═══ -->
+  <div id="transition-screen" class="hidden">
+    <span id="transition-level-num">Nível 1</span>
+    <h2 id="transition-level-name">A Avalanche de Banners</h2>
+    <p id="transition-level-desc">Só quero ver o app.</p>
+    <p id="transition-level-credit"></p>
+  </div>
+
+  <!-- ═══ Level Containers ═══ -->
+  <div id="level-1" class="level-container hidden"></div>
+  <div id="level-2" class="level-container hidden"></div>
+  <div id="level-3" class="level-container hidden"></div>
+  <div id="level-4" class="level-container hidden"></div>
+  <div id="level-5" class="level-container hidden"></div>
+
+  <!-- ═══ Payoff Screen ═══ -->
+  <div id="payoff-screen" class="hidden"></div>
+
+  <!-- ═══ End Screen ═══ -->
+  <div id="end-screen" class="hidden">
+    <div id="confetti-container"></div>
+    <h1 class="end-title">Você Sobreviveu. De Novo.</h1>
+    <p class="end-subtitle">Cinco níveis criados pela comunidade e você ainda está aqui. Respeito.</p>
+
+    <div class="end-stats">
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-time">0:00</span>
+        <span class="end-stat-label">Tempo</span>
+      </div>
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-clicks">0</span>
+        <span class="end-stat-label">Cliques de Raiva</span>
+      </div>
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-patience">0</span>
+        <span class="end-stat-label">Pontuação de Paciência</span>
+      </div>
+    </div>
+
+    <p class="end-patience-label" id="end-patience-label">Mestre Zen</p>
+    <p class="end-best" id="end-best"></p>
+
+    <div class="end-actions">
+      <button id="play-again-btn">Jogar Novamente</button>
+      <a id="woe1-btn" class="end-woe2-link" href="https://games.userguiding.com/worst-onboarding/pt-br/" target="_blank" rel="noopener">Jogue o original: O Pior Onboarding de Todos os Tempos →</a>
+    </div>
+
+    <div class="end-cta-block">
+      <h2 class="end-cta-heading">Prefere os últimos 10 segundos aos primeiros 5 níveis?</h2>
+      <p class="end-cta-body">Aquela parte suave do final é o que a UserGuiding constrói. Os cinco níveis antes dela são o que seus usuários podem estar vivendo agora.</p>
+      <a class="end-cta-link" href="https://userguiding.com/pt-br?utm_source=worst-onboarding-game-ptbr&utm_medium=referral&utm_campaign=woe2" target="_blank" rel="noopener">Conserte seu onboarding →</a>
+    </div>
+
+    <div id="capture-section">
+      <div id="capture-form-wrap">
+        <h2 class="capture-heading">Que tal um onboarding que não dá raiva?</h2>
+        <p class="capture-subtext">Deixe seu email. A Yasmin, da nossa equipe no Brasil, abre um papo com você sobre o onboarding do seu produto.</p>
+        <form id="capture-form" novalidate>
+          <input type="email" id="capture-email" name="email" placeholder="seu@email.com" required autocomplete="email">
+          <button type="submit" id="capture-submit">Falar com a Yasmin</button>
+          <p class="capture-error" id="capture-error" hidden>Ops, algo deu errado. Tenta de novo em alguns segundos?</p>
+          <p class="capture-consent">
+            Ao enviar, você concorda em receber contato comercial da UserGuiding.
+            Veja nossa <a href="https://userguiding.com/pt-br/politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.
+          </p>
+        </form>
+      </div>
+      <div id="capture-success-wrap" hidden>
+        <h2 class="capture-heading">Valeu!</h2>
+        <p class="capture-subtext">Vamos abrir a agenda da Yasmin em <span id="capture-countdown">3</span> segundos…</p>
+        <p class="capture-fallback">Se nada acontecer, <a href="#" id="capture-fallback-link">clique aqui</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/analytics.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/capture.js"></script>
+
+</body>
+</html>

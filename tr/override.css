@@ -1,0 +1,4 @@
+/* WOE 2 — Turkish variant overrides.
+   TR reuses the EN root's #meeting-section (Levent embed) styling from ../css/game.css,
+   so no capture-form CSS is needed here. This file holds only TR-specific
+   text-length fixes if any surface during 390px QA. */
