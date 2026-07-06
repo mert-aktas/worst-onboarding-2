@@ -85,42 +85,44 @@
   <!-- ═══ End Screen ═══ -->
   <div id="end-screen" class="hidden">
     <div id="confetti-container"></div>
-    <h1 class="end-title">Hayatta Kaldın. Yine.</h1>
-    <p class="end-subtitle">Topluluğun tasarladığı beş seviye ve sen hâlâ buradasın. Saygı duyduk.</p>
+    <div class="end-grid">
+      <div class="end-left">
+        <h1 class="end-title">Hayatta Kaldın. Yine.</h1>
+        <p class="end-subtitle">Topluluğun tasarladığı beş seviye ve sen hâlâ buradasın. Saygı duyduk.</p>
 
-    <div class="end-stats">
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-time">0:00</span>
-        <span class="end-stat-label">Süre</span>
+        <div class="end-stats">
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-time">0:00</span>
+            <span class="end-stat-label">Süre</span>
+          </div>
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-clicks">0</span>
+            <span class="end-stat-label">Öfke Tıklamaları</span>
+          </div>
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-patience">0</span>
+            <span class="end-stat-label">Sabır Puanı</span>
+          </div>
+        </div>
+
+        <p class="end-patience-label" id="end-patience-label">Sezercik kadar masum</p>
+        <p class="end-best" id="end-best"></p>
+
+        <div class="end-divider"></div>
+
+        <div class="end-actions">
+          <button id="play-again-btn">↻&nbsp;&nbsp;Tekrar Oyna</button>
+          <a id="woe1-btn" class="end-text-link" href="https://games.userguiding.com/worst-onboarding/tr/" target="_blank" rel="noopener">İlk oyunu oyna: Dünyanın En Kötü Onboarding'i →</a>
+        </div>
+
+        <p class="end-cta">İlk 5 seviye yerine son 10 saniyeyi mi tercih edersin? <a href="https://userguiding.com?utm_source=worst-onboarding-game-tr&utm_medium=referral&utm_campaign=woe2" target="_blank" rel="noopener">Onboarding'ini düzelt →</a></p>
       </div>
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-clicks">0</span>
-        <span class="end-stat-label">Öfke Tıklamaları</span>
-      </div>
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-patience">0</span>
-        <span class="end-stat-label">Sabır Puanı</span>
-      </div>
-    </div>
 
-    <p class="end-patience-label" id="end-patience-label">Sezercik kadar masum</p>
-    <p class="end-best" id="end-best"></p>
-
-    <div class="end-actions">
-      <button id="play-again-btn">Tekrar Oyna</button>
-      <a id="woe1-btn" class="end-woe2-link" href="https://games.userguiding.com/worst-onboarding/tr/" target="_blank" rel="noopener">İlk oyunu oyna: Dünyanın En Kötü Onboarding'i →</a>
-    </div>
-
-    <div class="end-cta-block">
-      <h2 class="end-cta-heading">İlk 5 seviye yerine son 10 saniyeyi mi tercih edersin?</h2>
-      <p class="end-cta-body">Sondaki o pürüzsüz kısım UserGuiding'in işi. Ondan önceki beş seviye ise kullanıcılarının şu anda yaşıyor olabileceği şey.</p>
-      <a class="end-cta-link" href="https://userguiding.com?utm_source=worst-onboarding-game-tr&utm_medium=referral&utm_campaign=woe2" target="_blank" rel="noopener">Onboarding'ini düzelt →</a>
-    </div>
-
+      <div class="end-card">
     <!-- ═══ July 9 Turkish Group Demo CTA (GetContrast embed — same widget as WOE1 TR) ═══ -->
     <div id="capture-section">
       <h2 class="meeting-heading">Peki iyi bir onboarding nasıl olur?</h2>
-      <p class="meeting-subtext">9 Temmuz'da canlı grup demomuzda UserGuiding'i sıfırdan birlikte kuruyoruz. Ücretsiz ve Türkçe. Aşağıdan kaydol:</p>
+      <p class="meeting-subtext">9 Temmuz'da canlı grup demomuzda UserGuiding'i sıfırdan birlikte kuruyoruz. Ücretsiz ve Türkçe. Sürpriz modal yok, garanti.</p>
       <div id="__contrast_registration_ea9b25ea-2bf7-421a-adec-35eabc640ec5" style="width: 100%; height: 620px;"></div>
       <script type="text/javascript">
         (() => {
@@ -147,6 +149,8 @@
           frameContainer.appendChild(iframe);
         })();
       </script>
+    </div>
+      </div>
     </div>
   </div>
 

@@ -84,7 +84,8 @@ function track(name, params = {}) {
 // "Play WOE 1 ->" cross-link fires only its own event (woe1_click), not cta_click.
 document.addEventListener('click', (e) => {
   const link = e.target.closest('a[href*="userguiding.com"]:not([href*="games.userguiding.com"])');
-  if (link) track('cta_click', { link_url: link.href });
+  // .capture-consent privacy-policy links are legal boilerplate, not CTA intent
+  if (link && !link.closest('.capture-consent')) track('cta_click', { link_url: link.href });
 });
 
 try { liLoadTag(); } catch (e) { /* ignore */ }

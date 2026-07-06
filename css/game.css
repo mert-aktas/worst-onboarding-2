@@ -626,3 +626,86 @@ body {
 .payoff-continue { padding: 0.9rem 2rem; font-family: var(--font-body); font-size: 0.95rem; font-weight: 500; background: var(--game-accent); color: #fff; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 0 30px var(--game-accent-glow); }
 @keyframes payoffFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 640px) { .payoff-field { flex-direction: column; } .payoff-create { width: 100%; } }
+
+/* ═══ End screen — two-column layout (v3 redesign, 2026-07-06) ═══
+   LEFT: the run (title, stats, label, actions) · RIGHT: .end-card (variant CTA).
+   Approved mockup: marvin content/woe1-endscreen-2col/reference/woe2-endscreen-2col.html */
+
+.end-grid {
+  width: 100%;
+  max-width: 1170px;
+  margin: auto; /* vertical centering inside #end-screen's flex column */
+  display: grid;
+  grid-template-columns: 1fr 470px;
+  gap: 72px;
+  align-items: center;
+  text-align: left;
+  padding: 1.5rem 0;
+}
+
+.end-grid .end-title { font-size: clamp(2.5rem, 5vw, 4.1rem); line-height: 1.04; margin-bottom: 0.6rem; }
+.end-grid .end-subtitle { margin-bottom: 2.6rem; }
+.end-grid .end-stats { gap: 3.2rem; margin-bottom: 1.9rem; }
+.end-grid .end-stat { text-align: left; }
+.end-grid .end-stat-value { font-size: 2.6rem; margin-bottom: 0.3rem; }
+.end-grid .end-best { margin-bottom: 0; }
+
+.end-divider { width: 56px; height: 1px; background: var(--game-border); margin: 2.4rem 0; }
+
+#end-screen .end-grid .end-actions { margin-top: 0; gap: 1.4rem; align-items: center; justify-content: flex-start; }
+.end-grid .end-cta { margin-top: 2.2rem; }
+
+/* Sequel promo link sits inline in the actions row as a red-tinted ghost */
+.end-grid .end-woe2-link { flex-basis: auto; margin-top: 0; border-color: rgba(255, 77, 77, 0.5); }
+.end-grid .end-woe2-link:hover { border-color: var(--game-accent); box-shadow: 0 0 24px var(--game-accent-glow); }
+
+/* Cross-game back-link: quiet underlined text */
+.end-text-link {
+  font-size: 0.88rem;
+  color: var(--game-text-dim);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 0.8rem 0;
+}
+.end-text-link:hover { color: var(--game-text); }
+
+/* RIGHT column card */
+.end-card {
+  background: var(--game-surface);
+  border: 1px solid var(--game-border);
+  border-radius: 16px;
+  padding: 30px 30px 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(232, 230, 227, 0.04);
+  text-align: left;
+  min-width: 0;
+}
+.end-card #meeting-section,
+.end-card #capture-section { margin: 0; max-width: none; width: 100%; }
+.end-card .meeting-heading { font-size: 1.62rem; margin-bottom: 0.45rem; }
+.end-card .meeting-subtext { font-size: 0.9rem; line-height: 1.55; margin-bottom: 1.3rem; }
+.end-card .meeting-fallback { text-align: center; }
+
+/* Leaderboard (EN root) rides below the grid */
+#end-screen #leaderboard-section { max-width: 720px; }
+
+@media (max-width: 1024px) {
+  .end-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 1rem 0;
+  }
+  .end-grid .end-stat { text-align: center; }
+  .end-grid .end-stats { justify-content: center; }
+  #end-screen .end-grid .end-actions { justify-content: center; }
+  .end-divider { margin: 2.4rem auto; }
+  .end-card { text-align: left; }
+}
+
+@media (max-width: 640px) {
+  .end-grid { gap: 32px; }
+  .end-grid .end-stats { gap: 1.5rem; flex-wrap: wrap; }
+  .end-card { padding: 22px 20px 18px; }
+}

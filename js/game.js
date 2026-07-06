@@ -18,7 +18,7 @@ const Game = {
   init() {
     document.getElementById('start-btn').addEventListener('click', () => this.start());
     document.getElementById('play-again-btn').addEventListener('click', () => this.restart());
-    document.getElementById('share-btn').addEventListener('click', () => this.share());
+    // share button removed in the 2-col redesign (2026-07-06); share() stays dormant below
     const woe1Btn = document.getElementById('woe1-btn');
     if (woe1Btn) woe1Btn.addEventListener('click', () => track('woe1_click'));
 

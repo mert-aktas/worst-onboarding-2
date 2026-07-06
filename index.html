@@ -84,44 +84,47 @@
   <!-- ═══ End Screen ═══ -->
   <div id="end-screen" class="hidden">
     <div id="confetti-container"></div>
-    <h1 class="end-title">You Survived. Again.</h1>
-    <p class="end-subtitle">Five community-designed levels and you are still here. Respect.</p>
+    <div class="end-grid">
+      <div class="end-left">
+        <h1 class="end-title">You Survived. Again.</h1>
+        <p class="end-subtitle">Five community-designed levels and you are still here. Respect.</p>
 
-    <div class="end-stats">
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-time">0:00</span>
-        <span class="end-stat-label">Time</span>
+        <div class="end-stats">
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-time">0:00</span>
+            <span class="end-stat-label">Time</span>
+          </div>
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-clicks">0</span>
+            <span class="end-stat-label">Rage Clicks</span>
+          </div>
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-patience">0</span>
+            <span class="end-stat-label">Patience Score</span>
+          </div>
+        </div>
+
+        <p class="end-patience-label" id="end-patience-label">Zen Master</p>
+        <p class="end-best" id="end-best"></p>
+
+        <div class="end-divider"></div>
+
+        <div class="end-actions">
+          <button id="play-again-btn">↻&nbsp;&nbsp;Play Again</button>
+          <a id="woe1-btn" class="end-text-link" href="https://games.userguiding.com/worst-onboarding/" target="_blank" rel="noopener">Play the original Worst Onboarding Ever →</a>
+        </div>
+
+        <p class="end-cta">Prefer the last 10 seconds over the first 5 levels? <a href="https://userguiding.com?utm_source=worst-onboarding-game&utm_medium=referral&utm_campaign=woe2" target="_blank" rel="noopener">Fix your onboarding →</a></p>
       </div>
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-clicks">0</span>
-        <span class="end-stat-label">Rage Clicks</span>
+
+      <div class="end-card">
+        <div id="meeting-section">
+          <h2 class="meeting-heading">Ready for the boring kind of onboarding?</h2>
+          <p class="meeting-subtext">The kind your users finish without rage clicks. 30 minutes with Levent from UserGuiding. Zero surprise modals, guaranteed.</p>
+          <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan?embed=true"></div>
+          <p class="meeting-fallback" id="meeting-fallback" hidden>If the calendar doesn't load, <a href="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan" target="_blank" rel="noopener noreferrer">click here to book your demo</a>.</p>
+        </div>
       </div>
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-patience">0</span>
-        <span class="end-stat-label">Patience Score</span>
-      </div>
-    </div>
-
-    <p class="end-patience-label" id="end-patience-label">Zen Master</p>
-    <p class="end-best" id="end-best"></p>
-
-    <div class="end-actions">
-      <button id="share-btn">Share Your Victory on LinkedIn</button>
-      <button id="play-again-btn">Play Again</button>
-      <a id="woe1-btn" class="end-woe2-link" href="https://games.userguiding.com/worst-onboarding/" target="_blank" rel="noopener">Play the original WOE 1 →</a>
-    </div>
-
-    <div class="end-cta-block">
-      <h2 class="end-cta-heading">Prefer the last 10 seconds over the first 5 levels?</h2>
-      <p class="end-cta-body">That smooth part at the end is what UserGuiding builds. The five levels before it are what your users might be living right now.</p>
-      <a class="end-cta-link" href="https://userguiding.com?utm_source=worst-onboarding-game&utm_medium=referral&utm_campaign=woe2" target="_blank" rel="noopener">Fix your onboarding →</a>
-    </div>
-
-    <div id="meeting-section">
-      <h2 class="meeting-heading">Prefer onboarding that does not fight back?</h2>
-      <p class="meeting-subtext">Grab 30 minutes with Levent from UserGuiding. Zero surprise modals, guaranteed.</p>
-      <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan?embed=true"></div>
-      <p class="meeting-fallback" id="meeting-fallback" hidden>If the calendar doesn't load, <a href="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan" target="_blank" rel="noopener noreferrer">click here to book your demo</a>.</p>
     </div>
   </div>
 

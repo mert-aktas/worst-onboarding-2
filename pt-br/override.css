@@ -162,3 +162,31 @@
   #capture-section .capture-heading { font-size: 21px; }
   #capture-section .capture-subtext { font-size: 14px; margin: 0 auto 16px; }
 }
+
+/* ═══ 2-col end screen (2026-07-06): .end-card supplies the card chrome — flatten this section's own ═══ */
+.end-card #capture-section {
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  max-width: none;
+  padding: 0;
+  overflow: visible;
+  text-align: left;
+}
+.end-card #capture-section::before { display: none; }
+.end-card #capture-section .capture-heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.62rem;
+  letter-spacing: 0;
+  margin: 0 0 0.45rem;
+}
+.end-card #capture-section .capture-subtext {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0 0 1.3rem;
+  max-width: none;
+}
+.end-card #capture-section .capture-consent { max-width: none; }

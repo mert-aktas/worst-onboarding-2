@@ -45,6 +45,7 @@ const Capture = {
 
     try {
       await this.submitToHubspot(email);
+      try { if (typeof track === 'function') track('lead_submit'); } catch (e) { /* ignore */ }
       this.showSuccessAndRedirect(email);
     } catch (err) {
       console.error('HubSpot submit failed:', err);

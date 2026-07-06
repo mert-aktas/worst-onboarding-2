@@ -85,51 +85,59 @@
   <!-- ═══ End Screen ═══ -->
   <div id="end-screen" class="hidden">
     <div id="confetti-container"></div>
-    <h1 class="end-title">Você Sobreviveu. De Novo.</h1>
-    <p class="end-subtitle">Cinco níveis criados pela comunidade e você ainda está aqui. Respeito.</p>
+    <div class="end-grid">
+      <div class="end-left">
+        <h1 class="end-title">Você Sobreviveu. De Novo.</h1>
+        <p class="end-subtitle">Cinco níveis criados pela comunidade e você ainda está aqui. Respeito.</p>
 
-    <div class="end-stats">
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-time">0:00</span>
-        <span class="end-stat-label">Tempo</span>
-      </div>
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-clicks">0</span>
-        <span class="end-stat-label">Cliques de Raiva</span>
-      </div>
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-patience">0</span>
-        <span class="end-stat-label">Pontuação de Paciência</span>
-      </div>
-    </div>
+        <div class="end-stats">
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-time">0:00</span>
+            <span class="end-stat-label">Tempo</span>
+          </div>
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-clicks">0</span>
+            <span class="end-stat-label">Cliques de Raiva</span>
+          </div>
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-patience">0</span>
+            <span class="end-stat-label">Pontuação de Paciência</span>
+          </div>
+        </div>
 
-    <p class="end-patience-label" id="end-patience-label">Mestre Zen</p>
-    <p class="end-best" id="end-best"></p>
+        <p class="end-patience-label" id="end-patience-label">Mestre Zen</p>
+        <p class="end-best" id="end-best"></p>
 
-    <div id="capture-section">
-      <div id="capture-form-wrap">
-        <h2 class="capture-heading">Que tal um onboarding que não dá raiva?</h2>
-        <p class="capture-subtext">Deixe seu email. A Yasmin, da nossa equipe no Brasil, abre um papo com você sobre o onboarding do seu produto.</p>
-        <form id="capture-form" novalidate>
-          <input type="email" id="capture-email" name="email" placeholder="seu@email.com" required autocomplete="email">
-          <button type="submit" id="capture-submit">Falar com a Yasmin</button>
-          <p class="capture-error" id="capture-error" hidden>Ops, algo deu errado. Tenta de novo em alguns segundos?</p>
-          <p class="capture-consent">
-            Ao enviar, você concorda em receber contato comercial da UserGuiding.
-            Veja nossa <a href="https://userguiding.com/pt-br/politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.
-          </p>
-        </form>
-      </div>
-      <div id="capture-success-wrap" hidden>
-        <h2 class="capture-heading">Valeu!</h2>
-        <p class="capture-subtext">Vamos abrir a agenda da Yasmin em <span id="capture-countdown">3</span> segundos…</p>
-        <p class="capture-fallback">Se nada acontecer, <a href="#" id="capture-fallback-link">clique aqui</a>.</p>
-      </div>
-    </div>
+        <div class="end-divider"></div>
 
-    <div class="end-actions">
-      <button id="play-again-btn">Jogar Novamente</button>
-      <a id="woe1-btn" class="end-woe2-link" href="https://games.userguiding.com/worst-onboarding/pt-br/" target="_blank" rel="noopener">Jogue o original: O Pior Onboarding de Todos os Tempos →</a>
+        <div class="end-actions">
+          <button id="play-again-btn">↻&nbsp;&nbsp;Jogar Novamente</button>
+          <a id="woe1-btn" class="end-text-link" href="https://games.userguiding.com/worst-onboarding/pt-br/" target="_blank" rel="noopener">Jogue o original: O Pior Onboarding de Todos os Tempos →</a>
+        </div>
+      </div>
+
+      <div class="end-card">
+        <div id="capture-section">
+          <div id="capture-form-wrap">
+            <h2 class="capture-heading">Que tal um onboarding que não dá raiva?</h2>
+            <p class="capture-subtext">Do tipo que seus usuários terminam sem cliques de raiva. Deixe seu email e a Yasmin, do nosso time no Brasil, chama você para um papo. Zero modais surpresa, garantido.</p>
+            <form id="capture-form" novalidate>
+              <input type="email" id="capture-email" name="email" placeholder="seu@email.com" required autocomplete="email">
+              <button type="submit" id="capture-submit">Falar com a Yasmin</button>
+              <p class="capture-error" id="capture-error" hidden>Ops, algo deu errado. Tenta de novo em alguns segundos?</p>
+              <p class="capture-consent">
+                Ao enviar, você concorda em receber contato comercial da UserGuiding.
+                Veja nossa <a href="https://userguiding.com/pt-br/politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.
+              </p>
+            </form>
+          </div>
+          <div id="capture-success-wrap" hidden>
+            <h2 class="capture-heading">Valeu!</h2>
+            <p class="capture-subtext">Vamos abrir a agenda da Yasmin em <span id="capture-countdown">3</span> segundos…</p>
+            <p class="capture-fallback">Se nada acontecer, <a href="#" id="capture-fallback-link">clique aqui</a>.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
