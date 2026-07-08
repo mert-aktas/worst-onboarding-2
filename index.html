@@ -32,6 +32,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/game.css">
   <link rel="stylesheet" href="css/levels.css">
+  <link rel="stylesheet" href="override.css">
 </head>
 <body>
 
@@ -116,11 +117,24 @@
       </div>
 
       <div class="end-card">
-        <div id="meeting-section">
-          <h2 class="meeting-heading">This is where the rage clicks stop.</h2>
-          <p class="meeting-subtext">We built five levels of bad onboarding because we fix the real kind for a living. Pick a slot below and let's talk.</p>
-          <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan?embed=true"></div>
-          <p class="meeting-fallback" id="meeting-fallback" hidden>If the calendar doesn't load, <a href="https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan" target="_blank" rel="noopener noreferrer">click here to book your demo</a>.</p>
+        <div id="capture-section">
+          <div id="capture-form-wrap">
+            <h2 class="capture-heading">This is where the rage clicks stop.</h2>
+            <p class="capture-subtext">We built five levels of bad onboarding because we fix the real kind for a living. Drop your email and let's talk.</p>
+            <form id="capture-form" novalidate>
+              <input type="email" id="capture-email" name="email" placeholder="you@company.com" required autocomplete="email">
+              <button type="submit" id="capture-submit" data-sending="Sending…">Let's talk</button>
+              <p class="capture-error" id="capture-error" hidden>Something broke. Try again in a sec?</p>
+              <p class="capture-consent">
+                By submitting, you agree to receive sales outreach from UserGuiding.
+                See our <a href="https://userguiding.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>.
+              </p>
+            </form>
+          </div>
+          <div id="capture-success-wrap" hidden>
+            <h2 class="capture-heading">Got it. Taking you there…</h2>
+            <p class="capture-fallback">If nothing happens, <a href="#" id="capture-fallback-link">click here</a>.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -130,6 +144,20 @@
   <script src="js/analytics.js"></script>
   <script src="js/game.js"></script>
   <script src="js/levels.js"></script>
+  <script>
+    window.CAPTURE_CONFIG = {
+      PORTAL_ID: '8289649',
+      FORM_GUID: 'fa606755-0bbd-4774-95bb-8a70cc0e8c7f',
+      PAGE_NAME: 'WOE2 EN',
+      mode: 'demo',
+      redirects: {
+        demo: 'https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan',
+        group: ''
+      },
+      REDIRECT_DELAY_SECONDS: 3
+    };
+  </script>
+  <script src="js/capture.js"></script>
 
 </body>
 </html>

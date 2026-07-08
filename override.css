@@ -1,0 +1,192 @@
+/* WOE 2 — EN (root) variant overrides.
+   ../css/game.css shipped the Levent meeting embed and has NO capture-form styles,
+   so the unified lead-capture card CSS lives here (identical to pt-br/override.css
+   and tr/override.css — the capture card looks the same in every language). */
+
+/* Capture form */
+#capture-section {
+  position: relative;
+  margin: 56px auto 32px;
+  max-width: 520px;
+  padding: 32px 36px 28px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Thin red accent strip at top, ties the form to the rage-click red */
+#capture-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #ff4d4d 50%, transparent 100%);
+}
+
+#capture-section .capture-heading {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+  color: #e8e6e3;
+  margin: 0 0 14px;
+}
+
+#capture-section .capture-subtext {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  color: #a9a7b3;
+  line-height: 1.55;
+  max-width: 420px;
+  margin: 0 auto 24px;
+}
+
+#capture-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+
+#capture-email {
+  padding: 16px 18px;
+  font-size: 16px;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #14141a;
+  color: #e8e6e3;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+#capture-email::placeholder {
+  color: #5b5966;
+}
+
+#capture-email:focus {
+  border-color: #ff4d4d;
+  box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.18);
+}
+
+#capture-submit {
+  padding: 15px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.2px;
+  background: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 150ms ease, transform 100ms ease;
+}
+
+#capture-submit:hover:not(:disabled) {
+  background: #ff5e5e;
+}
+
+#capture-submit:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+#capture-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.capture-error {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: #ff8a8a;
+  margin: 6px 0 0;
+}
+
+.capture-consent {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  color: #6b6976;
+  line-height: 1.6;
+  max-width: 380px;
+  margin: 14px auto 0;
+}
+
+.capture-consent a {
+  color: #a9a7b3;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.capture-consent a:hover {
+  color: #e8e6e3;
+}
+
+#capture-success-wrap .capture-subtext {
+  font-size: 16px;
+}
+
+#capture-countdown {
+  display: inline-block;
+  min-width: 1.2em;
+  font-weight: 700;
+  color: #ff4d4d;
+}
+
+.capture-fallback {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  color: #6b6976;
+  margin: 14px 0 0;
+}
+
+.capture-fallback a {
+  color: #a9a7b3;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Tighten the rhythm between patience label area and the form */
+#end-screen .end-best {
+  margin-bottom: 0;
+}
+
+/* Mobile: compact capture card (end screen scrolls on small screens) */
+@media (max-width: 640px) {
+  #capture-section { margin: 24px auto 16px; padding: 22px 18px 20px; }
+  #capture-section .capture-heading { font-size: 21px; }
+  #capture-section .capture-subtext { font-size: 14px; margin: 0 auto 16px; }
+}
+
+/* ═══ 2-col end screen (2026-07-06): .end-card supplies the card chrome — flatten this section's own ═══ */
+.end-card #capture-section {
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  max-width: none;
+  padding: 0;
+  overflow: visible;
+  text-align: left;
+}
+.end-card #capture-section::before { display: none; }
+.end-card #capture-section .capture-heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.62rem;
+  letter-spacing: 0;
+  margin: 0 0 0.45rem;
+}
+.end-card #capture-section .capture-subtext {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0 0 1.3rem;
+  max-width: none;
+}
+.end-card #capture-section .capture-consent { max-width: none; }

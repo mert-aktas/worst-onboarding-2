@@ -7,12 +7,17 @@ const WOE_VARIANT = (location.pathname.match(/worst-onboarding-2\/([a-z-]+)\//) 
 const WOE_LI_ENABLED = true;
 const LI_PARTNER_ID = '2295498';
 
-// WOE 2 conversion IDs: Mert creates 7 new event-specific conversions in Campaign
-// Manager after launch and fills these in. Empty map = liTrack() no-ops, page-view
-// audiences (?s=w2*) work from day one regardless.
+// WOE 2 conversion IDs (Campaign Manager, partner 2295498, created 2026-07-07 —
+// separate from WOE 1's set so the two games don't commingle).
 const LI_CONVERSIONS = {
-  // game_start: 0, reached_l2: 0, reached_l3: 0, reached_l4: 0,
-  // reached_l5: 0, game_complete: 0, cta_click: 0
+  game_start: 29344777,
+  reached_l2: 29344785,
+  reached_l3: 29344793,
+  reached_l4: 29344801,
+  reached_l5: 29344809,
+  game_complete: 29344817,
+  cta_click: 29344825,
+  lead_submit: 29344849  // shared "WOE Lead" conversion (same ID in WOE1) — fired on capture-form submit
 };
 
 function liLoadTag() {
@@ -68,6 +73,8 @@ function liDispatch(name, params) {
     liStage('w2done'); liTrack('game_complete');
   } else if (name === 'cta_click') {
     liTrack('cta_click');
+  } else if (name === 'lead_submit') {
+    liTrack('lead_submit');  // email captured on the end-screen form (no virtual URL)
   }
 }
 

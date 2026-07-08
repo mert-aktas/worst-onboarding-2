@@ -221,8 +221,8 @@ const Game = {
   },
 
   showResults() {
-    // Load the HubSpot meetings embed once results are actually reached.
-    if (!this._meetingsEmbedLoaded) {
+    // EN now uses the unified lead-capture card (capture.js), not the meetings embed.
+    if (false) {  // eslint-disable-line no-constant-condition
       this._meetingsEmbedLoaded = true;
       const s = document.createElement('script');
       s.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';

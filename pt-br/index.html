@@ -119,12 +119,12 @@
       <div class="end-card">
         <div id="capture-section">
           <div id="capture-form-wrap">
-            <h2 class="capture-heading">Que tal um onboarding que não dá raiva?</h2>
-            <p class="capture-subtext">Do tipo que seus usuários terminam sem cliques de raiva. Deixe seu email e a Yasmin, do nosso time no Brasil, chama você para um papo. Zero modais surpresa, garantido.</p>
+            <h2 class="capture-heading">É aqui que os cliques de raiva param.</h2>
+            <p class="capture-subtext">A gente criou cinco níveis de onboarding ruim porque conserta o tipo de verdade todo dia. Deixa seu email e a Yasmin, do nosso time no Brasil, chama você pra conversar.</p>
             <form id="capture-form" novalidate>
               <input type="email" id="capture-email" name="email" placeholder="seu@email.com" required autocomplete="email">
-              <button type="submit" id="capture-submit">Falar com a Yasmin</button>
-              <p class="capture-error" id="capture-error" hidden>Ops, algo deu errado. Tenta de novo em alguns segundos?</p>
+              <button type="submit" id="capture-submit" data-sending="Enviando…">Falar com a Yasmin</button>
+              <p class="capture-error" id="capture-error" hidden>Algo deu errado. Tenta de novo em alguns segundos?</p>
               <p class="capture-consent">
                 Ao enviar, você concorda em receber contato comercial da UserGuiding.
                 Veja nossa <a href="https://userguiding.com/pt-br/politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.
@@ -132,8 +132,7 @@
             </form>
           </div>
           <div id="capture-success-wrap" hidden>
-            <h2 class="capture-heading">Valeu!</h2>
-            <p class="capture-subtext">Vamos abrir a agenda da Yasmin em <span id="capture-countdown">3</span> segundos…</p>
+            <h2 class="capture-heading">Prontinho. Te levando pra lá…</h2>
             <p class="capture-fallback">Se nada acontecer, <a href="#" id="capture-fallback-link">clique aqui</a>.</p>
           </div>
         </div>
@@ -145,6 +144,19 @@
   <script src="../js/analytics.js"></script>
   <script src="js/game.js"></script>
   <script src="js/levels.js"></script>
+  <script>
+    window.CAPTURE_CONFIG = {
+      PORTAL_ID: '8289649',
+      FORM_GUID: '365c3905-dd69-4ce0-879e-496129f82db1',
+      PAGE_NAME: 'WOE2 PT-BR',
+      mode: 'demo',
+      redirects: {
+        demo: 'https://meetings.hubspot.com/yasmin-florencio',
+        group: ''
+      },
+      REDIRECT_DELAY_SECONDS: 3
+    };
+  </script>
   <script src="js/capture.js"></script>
 
 </body>
