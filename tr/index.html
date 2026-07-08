@@ -117,36 +117,24 @@
       </div>
 
       <div class="end-card">
-    <!-- ═══ July 9 Turkish Group Demo CTA (GetContrast embed — same widget as WOE1 TR) ═══ -->
     <div id="capture-section">
-      <h2 class="meeting-heading">Peki iyi bir onboarding nasıl olur?</h2>
-      <p class="meeting-subtext">9 Temmuz'da canlı grup demomuzda UserGuiding'i sıfırdan birlikte kuruyoruz. Ücretsiz ve Türkçe. Sürpriz modal yok, garanti.</p>
-      <div id="__contrast_registration_ea9b25ea-2bf7-421a-adec-35eabc640ec5" style="width: 100%; height: 620px;"></div>
-      <script type="text/javascript">
-        (() => {
-          const frameContainer = document.getElementById('__contrast_registration_ea9b25ea-2bf7-421a-adec-35eabc640ec5');
-          const iframeUrl = new URL('https://watch.getcontrast.io/widgets/register/userguiding-userguiding-i-sifirdan-kuruyoruz-canli-grup-demosu?primaryColor=%235378F5&locale=en&utm_source=woe2-tr');
-          const iframe = document.createElement('iframe');
-          iframe.src = iframeUrl.href;
-          iframe.setAttribute('style', 'width: 100%; height: 100%; border: 0;');
-          iframe.setAttribute('title', 'Contrast registration form');
-          if (window.location.search) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const utms = {
-              utm_medium: urlParams.get('utm_medium'),
-              utm_source: urlParams.get('utm_source'),
-              utm_campaign: urlParams.get('utm_campaign'),
-              utm_content: urlParams.get('utm_content'),
-              utm_term: urlParams.get('utm_term'),
-            };
-            Object.keys(utms).forEach((key) => {
-              if (utms[key]) { iframeUrl.searchParams.set(key, utms[key]); }
-            });
-            iframe.src = iframeUrl.href;
-          }
-          frameContainer.appendChild(iframe);
-        })();
-      </script>
+      <div id="capture-form-wrap">
+        <h2 class="capture-heading">Öfke tıklamalarının bittiği yer.</h2>
+        <p class="capture-subtext">Kötü onboarding'in beş seviyesini biz tasarladık, çünkü işimiz gerçeğini düzeltmek. E-postanı bırak, konuşalım.</p>
+        <form id="capture-form" novalidate>
+          <input type="email" id="capture-email" name="email" placeholder="eposta@sirket.com" required autocomplete="email">
+          <button type="submit" id="capture-submit" data-sending="Gönderiliyor…">Konuşalım</button>
+          <p class="capture-error" id="capture-error" hidden>Bir şeyler ters gitti. Birazdan tekrar dener misin?</p>
+          <p class="capture-consent">
+            Göndererek, UserGuiding'den ticari iletişim almayı kabul edersiniz.
+            <a href="https://userguiding.com/privacy-policy" target="_blank" rel="noopener">Gizlilik Politikası</a>.
+          </p>
+        </form>
+      </div>
+      <div id="capture-success-wrap" hidden>
+        <h2 class="capture-heading">Aldık, yönlendiriyoruz…</h2>
+        <p class="capture-fallback">Bir şey olmazsa, <a href="#" id="capture-fallback-link">buraya tıkla</a>.</p>
+      </div>
     </div>
       </div>
     </div>
@@ -156,6 +144,20 @@
   <script src="../js/analytics.js"></script>
   <script src="js/game.js"></script>
   <script src="js/levels.js"></script>
+  <script>
+    window.CAPTURE_CONFIG = {
+      PORTAL_ID: '8289649',
+      FORM_GUID: '2a9e7a38-f4cf-49e5-84bf-34a7ac546624',
+      PAGE_NAME: 'WOE2 TR',
+      mode: 'demo',
+      redirects: {
+        demo: 'https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan',
+        group: ''
+      },
+      REDIRECT_DELAY_SECONDS: 3
+    };
+  </script>
+  <script src="js/capture.js"></script>
 
 </body>
 </html>
