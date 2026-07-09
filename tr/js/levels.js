@@ -12,9 +12,11 @@ const Levels = {
     const info = {
       1: { name: "Banner Çığı", tagline: "Uygulamayı bir göreyim yeter." },
       2: { name: "Atlanamaz Akademi", tagline: "Otur yerine. Eğitim videosu opsiyonel değil.",
-           credit: "Seviye fikri: Denis Acia, LinkedIn'den. Şikayetler kendisine." },
+           credit: "Seviye fikri: Denis Acia. Bu acıyı bizzat yaşadı.",
+           creditName: "Denis Acia", creditUrl: "https://www.linkedin.com/in/denis-acia/" },
       3: { name: "Kıyamet Checklist'i", tagline: "Sadece üç hızlı adım. Aşağı yukarı.",
-           credit: "Tomasz Drybala'nın yaşadığı gerçek bir olaydan esinlenilmiştir. Başı sağolsun." },
+           credit: "Tomasz Drybala'nın atlattığı gerçek bir olay.",
+           creditName: "Tomasz Drybala", creditUrl: "https://www.linkedin.com/in/tomasz-drybala-a45049176/" },
       4: { name: "NPS Pususu", tagline: "Daha hiçbir şeye dokunamadan: kendini nasıl hissediyorsun?" },
       5: { name: "Cehennemden Gelen Copilot", tagline: "AI copilot'un geldi. Yardım etmekte ısrarcı." },
     };
@@ -26,6 +28,31 @@ const Levels = {
     container.classList.remove('hidden');
     const fn = this[`level${num}`];
     if (typeof fn === 'function') fn.call(this, container); // guarded: levels land incrementally
+    this.addCreditBadge(num, container);
+  },
+
+  // Topluluğun önerdiği seviyeler için kalıcı teşekkür rozeti (L2 Denis, L3 Tomasz).
+  // Seviye container'ının içinde durur; game.js bir sonraki geçişte otomatik siler.
+  // data-valid-click, LinkedIn tıklamasının rage click sayılmamasını sağlar.
+  addCreditBadge(num, container) {
+    const info = this.getInfo(num);
+    if (!container || !info || !info.creditUrl) return;
+    const badge = document.createElement('a');
+    badge.className = 'woe-credit-badge';
+    badge.href = info.creditUrl;
+    badge.target = '_blank';
+    badge.rel = 'noopener';
+    badge.setAttribute('data-valid-click', '');
+    badge.setAttribute('aria-label', `Seviye fikri: ${info.creditName} — LinkedIn'i yeni sekmede açar`);
+    const prefix = document.createElement('span');
+    prefix.textContent = '💡 Seviye fikri: ';
+    const name = document.createElement('strong');
+    name.textContent = info.creditName;
+    const arrow = document.createElement('span');
+    arrow.className = 'woe-credit-arrow';
+    arrow.textContent = '↗';
+    badge.append(prefix, name, arrow);
+    container.appendChild(badge);
   },
 
   // Shared toast, reused by every level. Deadpan, auto-dismisses.

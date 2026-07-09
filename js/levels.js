@@ -12,9 +12,11 @@ const Levels = {
     const info = {
       1: { name: 'The Banner Avalanche', tagline: 'Just let me see the app.' },
       2: { name: 'The Unskippable Academy', tagline: 'Sit down. The tutorial is not optional.',
-           credit: 'Level idea: Denis Acia, via LinkedIn. Blame him.' },
+           credit: 'Level idea by Denis Acia. He knows this pain firsthand.',
+           creditName: 'Denis Acia', creditUrl: 'https://www.linkedin.com/in/denis-acia/' },
       3: { name: 'The Checklist of Doom', tagline: 'Just three quick steps. Give or take.',
-           credit: 'Inspired by a true story from Tomasz Drybala. Our condolences.' },
+           credit: 'A true story, survived by Tomasz Drybala.',
+           creditName: 'Tomasz Drybala', creditUrl: 'https://www.linkedin.com/in/tomasz-drybala-a45049176/' },
       4: { name: 'The NPS Ambush', tagline: 'Before you touch anything: how do you feel?' },
       5: { name: 'The Copilot From Hell', tagline: 'Your AI copilot is here. It insists on helping.' },
     };
@@ -26,6 +28,31 @@ const Levels = {
     container.classList.remove('hidden');
     const fn = this[`level${num}`];
     if (typeof fn === 'function') fn.call(this, container); // guarded: levels land incrementally
+    this.addCreditBadge(num, container);
+  },
+
+  // Persistent shout-out for the community-suggested levels (L2 Denis, L3 Tomasz).
+  // Lives inside the level container so game.js wipes it automatically on the next
+  // transition. data-valid-click keeps the LinkedIn click-through out of the rage count.
+  addCreditBadge(num, container) {
+    const info = this.getInfo(num);
+    if (!container || !info || !info.creditUrl) return;
+    const badge = document.createElement('a');
+    badge.className = 'woe-credit-badge';
+    badge.href = info.creditUrl;
+    badge.target = '_blank';
+    badge.rel = 'noopener';
+    badge.setAttribute('data-valid-click', '');
+    badge.setAttribute('aria-label', `Level idea by ${info.creditName} — opens LinkedIn in a new tab`);
+    const prefix = document.createElement('span');
+    prefix.textContent = '💡 Level idea by ';
+    const name = document.createElement('strong');
+    name.textContent = info.creditName;
+    const arrow = document.createElement('span');
+    arrow.className = 'woe-credit-arrow';
+    arrow.textContent = '↗';
+    badge.append(prefix, name, arrow);
+    container.appendChild(badge);
   },
 
   // Shared toast, reused by every level. Deadpan, auto-dismisses.

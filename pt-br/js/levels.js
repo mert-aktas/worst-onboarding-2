@@ -12,9 +12,11 @@ const Levels = {
     const info = {
       1: { name: "A Avalanche de Banners", tagline: "Só quero ver o app." },
       2: { name: "A Academia Obrigatória", tagline: "Senta. O tutorial não é opcional.",
-           credit: "Ideia do nível: Denis Acia, via LinkedIn. A culpa é dele." },
+           credit: "Ideia do nível por Denis Acia. Ele conhece essa dor de perto.",
+           creditName: "Denis Acia", creditUrl: "https://www.linkedin.com/in/denis-acia/" },
       3: { name: "O Checklist da Perdição", tagline: "Só três passos rápidos. Mais ou menos.",
-           credit: "Inspirado em uma história real de Tomasz Drybala. Nossos pêsames." },
+           credit: "Uma história real, sobrevivida por Tomasz Drybala.",
+           creditName: "Tomasz Drybala", creditUrl: "https://www.linkedin.com/in/tomasz-drybala-a45049176/" },
       4: { name: "A Emboscada do NPS", tagline: "Antes de tocar em qualquer coisa: como você se sente?" },
       5: { name: "O Copilot do Inferno", tagline: "Seu copiloto de IA chegou. Ele insiste em ajudar." },
     };
@@ -26,6 +28,31 @@ const Levels = {
     container.classList.remove('hidden');
     const fn = this[`level${num}`];
     if (typeof fn === 'function') fn.call(this, container); // guarded: levels land incrementally
+    this.addCreditBadge(num, container);
+  },
+
+  // Crédito permanente para os níveis sugeridos pela comunidade (L2 Denis, L3 Tomasz).
+  // Fica dentro do container do nível; o game.js o remove sozinho na próxima transição.
+  // data-valid-click evita que o clique no LinkedIn conte como rage click.
+  addCreditBadge(num, container) {
+    const info = this.getInfo(num);
+    if (!container || !info || !info.creditUrl) return;
+    const badge = document.createElement('a');
+    badge.className = 'woe-credit-badge';
+    badge.href = info.creditUrl;
+    badge.target = '_blank';
+    badge.rel = 'noopener';
+    badge.setAttribute('data-valid-click', '');
+    badge.setAttribute('aria-label', `Ideia do nível por ${info.creditName} — abre o LinkedIn em uma nova aba`);
+    const prefix = document.createElement('span');
+    prefix.textContent = '💡 Ideia do nível por ';
+    const name = document.createElement('strong');
+    name.textContent = info.creditName;
+    const arrow = document.createElement('span');
+    arrow.className = 'woe-credit-arrow';
+    arrow.textContent = '↗';
+    badge.append(prefix, name, arrow);
+    container.appendChild(badge);
   },
 
   // Shared toast, reused by every level. Deadpan, auto-dismisses.
