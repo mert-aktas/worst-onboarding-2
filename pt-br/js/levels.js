@@ -14,9 +14,7 @@ const Levels = {
       2: { name: "A Academia Obrigatória", tagline: "Senta. O tutorial não é opcional.",
            credit: "Ideia do nível por Denis Acia. Ele conhece essa dor de perto.",
            creditName: "Denis Acia", creditUrl: "https://www.linkedin.com/in/denis-acia/" },
-      3: { name: "O Checklist da Perdição", tagline: "Só três passos rápidos. Mais ou menos.",
-           credit: "Uma história real, sobrevivida por Tomasz Drybala.",
-           creditName: "Tomasz Drybala", creditUrl: "https://www.linkedin.com/in/tomasz-drybala-a45049176/" },
+      3: { name: "O Checklist da Perdição", tagline: "Só três passos rápidos. Mais ou menos." },
       4: { name: "A Emboscada do NPS", tagline: "Antes de tocar em qualquer coisa: como você se sente?" },
       5: { name: "O Copilot do Inferno", tagline: "Seu copiloto de IA chegou. Ele insiste em ajudar." },
     };
@@ -31,7 +29,7 @@ const Levels = {
     this.addCreditBadge(num, container);
   },
 
-  // Crédito permanente para os níveis sugeridos pela comunidade (L2 Denis, L3 Tomasz).
+  // Crédito permanente para os níveis sugeridos pela comunidade (L2 Denis).
   // Fica dentro do container do nível; o game.js o remove sozinho na próxima transição.
   // data-valid-click evita que o clique no LinkedIn conte como rage click.
   addCreditBadge(num, container) {
@@ -282,7 +280,7 @@ const Levels = {
   },
 
   // ════════════════════════════════════════════════════════
-  // LEVEL 3: The Checklist of Doom (credit: Tomasz Drybala)
+  // LEVEL 3: The Checklist of Doom
   // Checking an item adds two more (cap 9); the denominator never resolves.
   // A 20s "Session" ring wipes all progress on idle (max 2 resets, then it gives
   // up and a skip link appears). Exit via the ... menu or that skip link. 20s is

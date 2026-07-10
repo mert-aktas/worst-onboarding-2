@@ -14,9 +14,7 @@ const Levels = {
       2: { name: "Atlanamaz Akademi", tagline: "Otur yerine. Eğitim videosu opsiyonel değil.",
            credit: "Seviye fikri: Denis Acia. Bu acıyı bizzat yaşadı.",
            creditName: "Denis Acia", creditUrl: "https://www.linkedin.com/in/denis-acia/" },
-      3: { name: "Kıyamet Checklist'i", tagline: "Sadece üç hızlı adım. Aşağı yukarı.",
-           credit: "Tomasz Drybala'nın atlattığı gerçek bir olay.",
-           creditName: "Tomasz Drybala", creditUrl: "https://www.linkedin.com/in/tomasz-drybala-a45049176/" },
+      3: { name: "Kıyamet Checklist'i", tagline: "Sadece üç hızlı adım. Aşağı yukarı." },
       4: { name: "NPS Pususu", tagline: "Daha hiçbir şeye dokunamadan: kendini nasıl hissediyorsun?" },
       5: { name: "Cehennemden Gelen Copilot", tagline: "AI copilot'un geldi. Yardım etmekte ısrarcı." },
     };
@@ -31,7 +29,7 @@ const Levels = {
     this.addCreditBadge(num, container);
   },
 
-  // Topluluğun önerdiği seviyeler için kalıcı teşekkür rozeti (L2 Denis, L3 Tomasz).
+  // Topluluğun önerdiği seviyeler için kalıcı teşekkür rozeti (L2 Denis).
   // Seviye container'ının içinde durur; game.js bir sonraki geçişte otomatik siler.
   // data-valid-click, LinkedIn tıklamasının rage click sayılmamasını sağlar.
   addCreditBadge(num, container) {
@@ -282,7 +280,7 @@ const Levels = {
   },
 
   // ════════════════════════════════════════════════════════
-  // LEVEL 3: The Checklist of Doom (credit: Tomasz Drybala)
+  // LEVEL 3: The Checklist of Doom
   // Checking an item adds two more (cap 9); the denominator never resolves.
   // A 20s "Session" ring wipes all progress on idle (max 2 resets, then it gives
   // up and a skip link appears). Exit via the ... menu or that skip link. 20s is

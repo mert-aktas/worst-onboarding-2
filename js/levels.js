@@ -14,9 +14,7 @@ const Levels = {
       2: { name: 'The Unskippable Academy', tagline: 'Sit down. The tutorial is not optional.',
            credit: 'Level idea by Denis Acia. He knows this pain firsthand.',
            creditName: 'Denis Acia', creditUrl: 'https://www.linkedin.com/in/denis-acia/' },
-      3: { name: 'The Checklist of Doom', tagline: 'Just three quick steps. Give or take.',
-           credit: 'A true story, survived by Tomasz Drybala.',
-           creditName: 'Tomasz Drybala', creditUrl: 'https://www.linkedin.com/in/tomasz-drybala-a45049176/' },
+      3: { name: 'The Checklist of Doom', tagline: 'Just three quick steps. Give or take.' },
       4: { name: 'The NPS Ambush', tagline: 'Before you touch anything: how do you feel?' },
       5: { name: 'The Copilot From Hell', tagline: 'Your AI copilot is here. It insists on helping.' },
     };
@@ -31,7 +29,7 @@ const Levels = {
     this.addCreditBadge(num, container);
   },
 
-  // Persistent shout-out for the community-suggested levels (L2 Denis, L3 Tomasz).
+  // Persistent shout-out for the community-suggested levels (L2 Denis).
   // Lives inside the level container so game.js wipes it automatically on the next
   // transition. data-valid-click keeps the LinkedIn click-through out of the rage count.
   addCreditBadge(num, container) {
@@ -282,7 +280,7 @@ const Levels = {
   },
 
   // ════════════════════════════════════════════════════════
-  // LEVEL 3: The Checklist of Doom (credit: Tomasz Drybala)
+  // LEVEL 3: The Checklist of Doom
   // Checking an item adds two more (cap 9); the denominator never resolves.
   // A 20s "Session" ring wipes all progress on idle (max 2 resets, then it gives
   // up and a skip link appears). Exit via the ... menu or that skip link. 20s is

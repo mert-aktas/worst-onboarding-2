@@ -25,7 +25,7 @@
 }
 .woe-toast-out { opacity: 0; transform: translateX(-50%) translateY(10px); }
 
-/* transition-screen credit line (Denis / Tomasz etc.) */
+/* transition-screen credit line (Denis etc.) */
 #transition-level-credit {
   margin-top: 0.75rem;
   font-size: 0.8rem;
@@ -34,7 +34,7 @@
 }
 
 /* Persistent community-credit badge — stays on screen the whole level the
-   person suggested (L2 Denis, L3 Tomasz), links to their LinkedIn. It carries
+   person suggested (L2 Denis), links to their LinkedIn. It carries
    data-valid-click so clicking through never counts as a rage click. */
 .woe-credit-badge {
   position: fixed;
